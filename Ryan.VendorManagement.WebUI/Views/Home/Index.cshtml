@@ -1,0 +1,44 @@
+﻿
+@{
+    ViewBag.Title = "VendorList";
+}
+
+<h2>VendorList</h2>
+
+@using Ryan.VendorManagement.WebUI.Models.vendor
+
+@model List<VendorProfileViewModel>
+
+
+
+<div>
+
+    <table id="nakjsnd">
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @item.VendorLegalName
+                </td>
+                <td>
+                    @item.VendorDBAName
+                </td>
+                <td>
+                    @item.VendorZipCode
+                </td>
+                <td>
+                    @item.VendorEIN
+                </td>
+               
+
+            </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+</div>
+

@@ -1,0 +1,164 @@
+﻿body {
+}
+
+
+
+/* This is the file to place ryan specific CSS customizations 
+**** NOTE: Be sure this css is loaded last in the layout page.
+
+*/
+.float-e-margins .btn.btn-inline {
+    margin-bottom: 0;
+}
+
+textarea.main-comments {
+    height: 178px;
+}
+
+textarea.it-comments {
+    height: 178px;
+}
+
+textarea.payroll-comments {
+    height: 75px;
+}
+
+.page-heading {
+    padding: 0;
+}
+
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-x: auto;
+    /* prevent horizontal scrollbar */
+    overflow-y: hidden;
+}
+
+.ui-autocomplete-loading {
+    background: white url("plugins/jQueryUI/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}
+
+.tabs-container .tabs-left .panel-body {
+    width: 90%;
+    margin-left: 10%;
+}
+
+.tabs-container .tabs-left > .nav-tabs {
+    width: 10%;
+}
+
+.form-group .grouped-field {
+    width: auto;
+    text-align: center;
+    border: 1px solid #CCC;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.form-group span {
+    float: left;
+    display: inline-block;
+    margin-left: .25em;
+    margin-right: .25em;
+}
+
+.input-group-addon {
+    position: relative;
+    border-color: darkgray;
+    /*margin-bottom: 5px;*/
+}
+
+.input-group-manager {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #27613f;
+    border-color: #27613f;
+}
+
+.top-navigation .navbar-brand {
+    background-color: #27613f;
+}
+
+.pace .pace-progress {
+    background-color: #27613f;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    background-color: green;
+    border-color: green;
+}
+
+.top-navigation .nav > li.active > a {
+    color: #27613f;
+}
+
+.top-navigation .nav > li a:hover,
+.top-navigation .nav > li a:focus {
+    color: #27613f;
+}
+
+#iphone-options-panel-body {
+    width: 100%;
+    margin-left: 0;
+}
+
+#ipad-options-panel-body {
+    width: 100%;
+    margin-left: 0;
+}
+
+.form-control, single-line {
+    border-color: darkgray;
+}
+
+.form-group .grouped-field {
+    width: auto;
+    text-align: center;
+    border: 1px solid darkgray;
+    float: left;
+    margin-bottom: 15px;
+}
+
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #f4f4f4;
+    border-color: darkgray;
+    color: inherit;
+    cursor: default;
+    z-index: 2;
+}
+
+.pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: darkgray;
+}
+
+.table-bordered {
+    border-color: darkgray;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 1px solid darkgray;
+    line-height: 1.4285;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px solid darkgray;
+}
+
+
+
+

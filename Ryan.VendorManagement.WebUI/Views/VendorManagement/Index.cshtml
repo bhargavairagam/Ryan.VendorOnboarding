@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Vendor Onboarding Home";
+}
+
+
+
+@using Ryan.VendorManagement.WebUI.Models.vendor
+
+@model List<VendorProfileViewModel>
+
+
+
+<div>
+
+    @*@using (Html.BeginForm("Index", "VendorManagement", FormMethod.Post))
+    {
+        <div class="row">
+            <label>Vendor Name</label>
+            <input type="text" id="SearchText" name="UserName" value="" class="form-control" />
+        </div>
+
+
+    }*@
+
+    <table id="nakjsnd" class="table table-bordered table-striped table-hover datatables-search-results" style="margin-top:20px">
+        <thead>
+            <tr>
+                <th>Vendor Name</th>
+                <th>DBA Name</th>
+                <th>Zip Code</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @item.VendorLegalName
+                    </td>
+                    <td>
+                        @item.VendorDBAName
+                    </td>
+                    <td>
+                        @item.VendorZipCode
+                    </td>
+                    <td>
+                        @Html.ActionLink(@item.VendorStatus, "GetVendorDetails", "VendorManagement", new { EIN = @item.VendorEIN }, new { @class = "btn btn-sm btn-primary" })
+
+                    </td>
+
+
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+
+    @Html.ActionLink("Add a new Vendor", "AddVendor", null, new { @class = "btn btn-primary" })
+
+
+</div>
+

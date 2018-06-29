@@ -1,0 +1,57 @@
+﻿@model Ryan.VendorManagement.WebUI.Models.vendor.VendorManagementViewModel
+
+@{
+    ViewBag.Title = "Add New Vendor";
+}
+
+<h2>Add New Vendor</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+
+    <div class="form-group">
+        <label class="control-label col-md-2" >Vendor LegalName</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VendorLegalName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VendorLegalName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-2">Vendor EIN</label>
+    
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VendorEIN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VendorEIN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Vendor Email</label>
+       
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VendorEmail, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VendorEmail, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

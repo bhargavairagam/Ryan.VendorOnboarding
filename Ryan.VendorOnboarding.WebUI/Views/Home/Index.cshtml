@@ -1,0 +1,294 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Onboarding | </title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+
+    <link href="~/Content/ShareBoot.css" rel="stylesheet" />
+    <style>
+        .header {
+            height: 70px;
+            background: green;
+            margin-bottom: 20px;
+            padding-top: 10px;
+            text-align: center;
+        }
+
+        .ryanHeader {
+            font-size: 30px;
+            color: white;
+        }
+
+        .marbot10 {
+            margin-bottom: 10px !important;
+        }
+
+        .marbot20 {
+            margin-bottom: 20px !important;
+        }
+
+        .hm-property {
+            margin-top: 10px;
+        }
+
+        .hm-fieldset {
+            margin-top: 12px;
+            width: 905px;
+            height: 250px;
+            border: 2px groove grey !important;
+            padding: 0 10px 10px 10px !important;
+        }
+
+        .hm-legend {
+            font-weight: bold;
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 18px;
+            color: #555;
+            border-bottom: none;
+            padding: 0 10px;
+            width: auto;
+        }
+    </style>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#chkcard").click(function () {
+                if ($(this).is(':checked')) {
+                    $("#vendorcarddetails").show();
+                }
+                else {
+                    $("#vendorcarddetails").hide();
+                }
+            });
+        });
+
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+    </script>
+
+</head>
+
+<body>
+    @using Ryan.VendorOnboarding.WebUI.Models
+    @model VendorViewModel
+
+
+
+    <div class="container body-content">
+
+        <header class="header">
+            <span class="ryanHeader">  Ryan Vendor Form </span>
+
+        </header>
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post,new { enctype = "multipart/form-data"  }))
+        {
+        @Html.AntiForgeryToken()
+
+
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+        <div class="container">
+            <div class="row marbot10">
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+
+                    <div class="form-group">
+                        <label> Select Circle</label>
+
+                        @Html.DropDownListFor(m => m.CircleOne, Model.States, "select one", new { @class = "form-control" })
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row marbot10">
+
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Vendor Name</label>
+                        @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control", @placeholder = "VendorName" })
+                    </div>
+
+
+
+                </div>
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Vendor DBA Name</label>
+
+                        @Html.TextBoxFor(m => m.VendorDBAName, new { @class = "form-control", @placeholder = "DBA Name" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row marbot10">
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <label>EIN</label>
+
+                    @Html.TextBoxFor(m => m.VendorEIN, new { @class = "form-control", @placeholder = "EIN", onkeypress = "return isNumber(event);" })
+
+                </div>
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <label>EIN</label>
+
+                    @Html.TextBoxFor(m => m.VendorAddress, new { @class = "form-control", @placeholder = "Address" })
+                </div>
+            </div>
+            <div class="row marbot10">
+                <div class="col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Address</label>
+
+                        @Html.TextBoxFor(m => m.AddressState, new { @class = "form-control", @placeholder = "State" })
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-4">
+
+                    <label>ZIP</label>
+                    @Html.TextBoxFor(m => m.VendorZip, new { @class = "form-control", @placeholder = "ZipCode", onkeypress = "return isNumber(event);" })
+
+                </div>
+            </div>
+            <div class="row marbot10">
+                <div class="col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        @Html.TextBoxFor(m => m.VendorPhone, new { @class = "form-control", @placeholder = "PhoneNumber" })
+                    </div>
+
+                </div>
+                <div class="col-lg-4 col-md-4 col-xs-4">
+                    <label>FAX</label>
+                    @Html.TextBoxFor(m => m.VendorFax, new { @class = "form-control", @placeholder = "FAX" })
+                </div>
+            </div>
+
+
+
+
+            <div class="row marbot10">
+                <div class="col-lg-4 col-md-4 col-xs-4">
+
+                    @Html.CheckBoxFor(m => m.AcceptCard, new { @id = "chkcard" })  <label>Do you accept card</label>
+
+                </div>
+
+            </div>
+            <div id="vendorcarddetails" style="display: none;">
+                <div class="row marbot10">
+
+                    <div class="col-lg-4 col-md-4 col-xs-4">
+                        <div class="form-group">
+                            <label>Card Holder Name</label>
+                            @Html.TextBoxFor(m => m.CardHolderName, new { @class = "form-control", @placeholder = "CardHolder Name" })
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                <div class="row marbot10">
+
+                    <div class="col-lg-4 col-md-4 col-xs-4">
+                        <div class="form-group">
+                            <label>Card Holder Phone</label>
+                            @Html.TextBoxFor(m => m.CardHolderPhone, new { @class = "form-control", @placeholder = "CardHolder Phone" })
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 col-md-4 col-xs-4">
+                        <div class="form-group">
+                            <label>Card Holder Email</label>
+                            @Html.TextBoxFor(m => m.CardHolderEmail, new { @class = "form-control", @placeholder = "CardHolder Email" })
+                        </div>
+                    </div>
+
+                </div>
+
+
+
+
+            </div>
+
+
+            <div class="row marbot10">
+
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Person Completing this Form</label>
+                        @Html.TextBoxFor(m => m.PersonCompletingForm, new { @class = "form-control", @placeholder = "PersonCompleting Form" })
+                    </div>
+
+
+
+                </div>
+                <div class=" col-lg-4 col-md-4 col-xs-4">
+                    <div class="form-group">
+                        <label>Designation(Title)</label>
+
+                        @Html.TextBoxFor(m => m.PersonCompletingTitle, new { @class = "form-control", @placeholder = "Person Designation" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="row marbot10">
+                <div class="form-group">
+                    @Html.Label("Upload Document", new { @class = "control-label col-md-2" })
+                    <div class="col-lg-9 col-md-9">
+                        <input type="file" id="Avatar" name="upload" />
+                    </div>
+                </div>
+
+            </div>
+
+
+            <div class="row marbot10">
+                <div class="col-lg-4 col-md-4 col-xs-4">
+
+                    @Html.CheckBoxFor(m => m.AcceptAboveDetails , new { @id = "acknowledge" })  <label>I acknowledge that details submited are true to my knowledge</label>
+
+                </div>
+
+            </div>
+
+
+            <div class="row">
+                <div class="form-group">
+                    <div class="col-lg-4 col-md-4">
+                        <input type="submit" value="Submit" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+
+
+}
+
+
+
+
+    </div>
+
+
+       
+
+</body>
+</html>

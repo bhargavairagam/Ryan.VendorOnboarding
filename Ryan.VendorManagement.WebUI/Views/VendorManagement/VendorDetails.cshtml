@@ -1,0 +1,85 @@
+﻿
+
+<!DOCTYPE html>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Vendor Details</h2>
+    </div>
+
+</div>
+
+@using Ryan.VendorManagement.WebUI.Models.vendor
+
+@model VendorProfileViewModel
+
+<div class="container">
+
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor Name</label>
+                <input type="text" id="VendorLegalName" name="UserName" value="@Model.VendorLegalName" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor DBA Name</label>
+                <input type="text" id="VendorDBAName" name="UserName" value="@Model.VendorDBAName" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor Address </label>
+                <input type="text" name="UserName" value="@Model.VendorAddress1" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>City</label>
+                <input type="text" name="UserName" value="@Model.VendorAddress2" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor Phone</label>
+                <input type="text" name="UserName" value="@Model.VPhone" disabled class="form-control" />
+
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+
+                <label>Vendor Fax</label>
+                <input type="text" name="UserName" value="@Model.VFax" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor Status </label>
+                <input type="text" name="UserName" value="@Model.VendorStatus" disabled class="form-control" />
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="form-group">
+                <label>Vendor DBA Name</label>
+                <input type="text" name="UserName" value="@Model.VendorLegalName" disabled class="form-control" />
+            </div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+
