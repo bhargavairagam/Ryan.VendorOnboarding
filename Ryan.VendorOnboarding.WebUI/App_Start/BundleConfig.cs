@@ -11,6 +11,9 @@ namespace Ryan.VendorOnboarding.WebUI
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                         "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
+                        "~/Scripts/jquery-1.12.4.min.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                         "~/Scripts/jquery.validate*"));
 
@@ -24,8 +27,13 @@ namespace Ryan.VendorOnboarding.WebUI
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.css", "~/Content/ryan.css", "~/Content/style.css", "~/Content/font-awesome.min.css",
+                      "~/Content/site.css" , "~/Content/jquery.fileupload.css", "~/Content/jquery.fileupload-ui.css"));
+
+            
+
         }
+
+
     }
 }

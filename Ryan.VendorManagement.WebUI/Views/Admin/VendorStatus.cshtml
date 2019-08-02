@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+
+
+@using Ryan.VendorManagement.WebUI.Models.vendor
+
+@model List<VendorProfileViewModel>
+
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2> Admin Home</h2>
+    </div>
+    <!-- /.col -->
+    <div class="col-lg-2" style="margin-top:15px;">
+       
+    </div>
+    <!-- /.col -->
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+    <div class="row">
+        <div class="col-lg-11">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h2>Vendor Results</h2>  <a href="@Url.Action("ViewAllVendors", "Admin")" class="btn btn-primary" title="Click here to view Vendors in all Statuses."> View All Vendors</a>
+                    
+                </div>
+
+                <div class="ibox-content">
+                    <table id="example" class="display table table-bordered table-striped table-hover datatables-search-results" >
+                        <thead>
+                            <tr>
+                                <th> DBAName </th>
+                                <th class="customheader">LegalName</th>
+                                <th class="customheader">JDE ID#</th>
+                                <th class="customheader">SearchType</th>
+                                <th title="Onboarding Status"> Onboarding Status</th>
+                                <th class="customheader" title="Status in JDE">JDE Status</th>
+
+                                <th class="customheader">EIN/SSN</th>
+                                <th class="customheader">Address1</th>
+                                <th class="customheader">Address2</th>
+                                <th class="customheader">City</th>
+                                <th class="customheader">State</th>
+
+                                <th class="customheader">PhoneNumber</th>
+                                <th class="customheader">Zip</th>
+                                <th class="customheader">Payment Address</th>
+                                <th class="customheader">Payment City</th>
+                                <th class="customheader">Payment State</th>
+                                <th class="customheader">Payment Zip</th>
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="divLoadingSpinner" class="row text-center" style="display:none;z-index:1099">
+        <img src="/Content/images/spinner.gif" />
+    </div>
+
+</div>
+
+
+@Scripts.Render("~/bundles/datatables")
+
+
+@*<script src="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css"></script>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        var obj = {};
+
+        $("#divLoadingSpinner").show();
+
+        $.ajax({
+            url: '@Url.Action("GetVendorList", "Admin")',
+            type: 'GET',
+
+            success: function (data) {
+                obj = data;
+
+            },
+            error: function (jqXHR) {
+                console.error(JSON.stringify(jqXHR));
+
+            }
+          }
+        ).done(function () {
+            $("#divLoadingSpinner").hide();
+            $('.datatables-search-results').DataTable({
+
+
+                data: obj,
+
+                columns: [
+
+                    {
+                        "data": "VendorDBAName",
+                        "render": function (data, type, row, meta) {
+                            if (type === 'display') {
+                                data = '<a href="/VendorManagement/EditVendor?vid=' + row.ID + '">' + data + '</a>';
+                            }
+
+                            return data;
+                        }
+
+                    },
+                    {
+                        "data": "VendorLegalName"
+                    },
+                    { "data": "JDEVendorID" },
+                    { "data": "VendorType" },
+                    { "data": "VendorStatus" },
+                    { "data": "STATUSINJDE" },
+                    { "data": "VendorEIN" },
+                    { "data": "Address1" },
+                    { "data": "Address2" },
+                    { "data": "VendorState" },
+                    { "data": "VendorCity" },
+                    { "data": "VendorPhone" },
+                    { "data": "VendorZip" },
+                    { "data": "AIAddress"},
+                    { "data": "AICity" },
+                    { "data": "AIState" },
+                    { "data": "AIZip" }
+                   
+                ],
+                columnDefs: [
+                    { width: 180, targets: 0 },
+                    { width: 180, targets: 1 },
+                    { width: 180, targets: 7 },
+                    { width: 60, targets: 11 },
+                    { width: 60, targets: 12 },
+                    { width: 140, targets: 13 }
+                ],
+                length: 10,
+                scrollX: true ,
+                order: []
+
+            });
+
+
+
+        })
+
+
+    });
+
+
+
+</script>
+
+

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ryan.Vendorboarding.Domain
+namespace Ryan.VendorOnboarding.Domain
 {
     public class EFDbActionResult : IDbActionResult
     {

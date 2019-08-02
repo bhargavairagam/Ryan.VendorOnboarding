@@ -1,0 +1,32 @@
+﻿Rose Ann (‎2‎/‎12‎/‎2018‎ ‎9‎:‎55‎:‎38‎ ‎AM): Hello and welcome to Cisco Registered Envelope Service support. 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎9‎:‎55‎:‎53‎ ‎AM): Hello. 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎9‎:‎56‎:‎12‎ ‎AM): I receive your message regarding the custom template. I'll do my best to help. 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎56‎:‎46‎ ‎AM): thanks 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎9‎:‎57‎:‎08‎ ‎AM): What seems to be the matter? 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎57‎:‎11‎ ‎AM): not sure if I need to do any custom configuration 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎9‎:‎57‎:‎41‎ ‎AM): Would this be for a secured email? 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎57‎:‎48‎ ‎AM): hey.. im trying to customize email to external clients from my company 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎57‎:‎49‎ ‎AM): yes 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎58‎:‎23‎ ‎AM): I designed one custom template 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎58‎:‎35‎ ‎AM): and tried sending emails... 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎58‎:‎59‎ ‎AM): and I don't see custom templates being applied to those email 
+Me (‎2‎/‎12‎/‎2018‎ ‎9‎:‎59‎:‎32‎ ‎AM): i followed document from "help" link 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎00‎:‎23‎ ‎AM): Have you also tried setting up your email settings as well? 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎00‎:‎39‎ ‎AM): where is that setting 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎00‎:‎41‎ ‎AM): i don't see it 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎00‎:‎51‎ ‎AM): On your personal email. 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎01‎:‎54‎ ‎AM): did not get your question 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎02‎:‎08‎ ‎AM): what setting should i set up ? 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎07‎:‎02‎ ‎AM): Let me check my resources for you. 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎08‎:‎05‎ ‎AM): thanks 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎08‎:‎12‎ ‎AM): You're welcome. 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎11‎:‎04‎ ‎AM): May I know what program or application are you using now? 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎11‎:‎31‎ ‎AM): cisco 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎11‎:‎35‎ ‎AM): res 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎13‎:‎10‎ ‎AM): I see. The reason I asked is because Cisco CRES handles the security encryption of the message but not particularly with the layout on how the message will look like. 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎13‎:‎39‎ ‎AM): ok 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎14‎:‎16‎ ‎AM): so you are saying that i cannot customize the way message should look like 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎14‎:‎34‎ ‎AM): i want to have my company logo... when they open the message 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎16‎:‎58‎ ‎AM): I see. Let me further check it for you. 
+Me (‎2‎/‎12‎/‎2018‎ ‎10‎:‎17‎:‎26‎ ‎AM): ok 
+Rose Ann (‎2‎/‎12‎/‎2018‎ ‎10‎:‎17‎:‎37‎ ‎AM): Thanks. 

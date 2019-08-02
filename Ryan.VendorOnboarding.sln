@@ -11,7 +11,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan.VendorOnboarding.WebUI
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan.VendorManagement.WebUI", "Ryan.VendorManagement.WebUI\Ryan.VendorManagement.WebUI.csproj", "{D86A604B-E3DC-4EDD-8AD2-D0CADDC9357F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan.Vendorboarding.Domain", "Ryan.Vendorboarding.Domain1\Ryan.Vendorboarding.Domain.csproj", "{D0CA521E-3257-44A8-8760-A7ED0ADDADED}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan.VendorOnboarding.Domain", "Ryan.Vendorboarding.Domain1\Ryan.VendorOnboarding.Domain.csproj", "{D0CA521E-3257-44A8-8760-A7ED0ADDADED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ryan.EmployeeOst.Domain", "Ryan.EmployeeOst.Domain\Ryan.EmployeeOst.Domain.csproj", "{46217B6A-6B09-4701-A979-893ACDB146B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{D0CA521E-3257-44A8-8760-A7ED0ADDADED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0CA521E-3257-44A8-8760-A7ED0ADDADED}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0CA521E-3257-44A8-8760-A7ED0ADDADED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46217B6A-6B09-4701-A979-893ACDB146B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46217B6A-6B09-4701-A979-893ACDB146B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46217B6A-6B09-4701-A979-893ACDB146B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46217B6A-6B09-4701-A979-893ACDB146B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

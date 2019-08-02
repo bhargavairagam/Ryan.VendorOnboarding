@@ -1,0 +1,82 @@
+﻿
+
+
+
+
+@using Ryan.VendorManagement.WebUI.Infrastructure.Security
+@{ 
+   var  env = System.Configuration.ConfigurationManager.AppSettings["environment"].ToString();
+}
+
+
+
+<div class="row border-bottom white-bg">
+    <nav class="navbar navbar-static-top" role="navigation">
+        <div class="navbar-header">
+            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                <i class="fa fa-reorder"></i>
+            </button>
+            <span>
+                @*<img src="~/Content/images/" style="height:60px !important" />*@
+            </span>
+            <a href="@Url.Action("Index","VendorManagement")" class="navbar-brand">Vendor Onboarding  @env</a>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar">
+            <ul class="nav navbar-nav">
+                <li>
+                    @Html.ActionLink("Invite Vendor", "AddVendor", "VendorManagement", null, new { title = "Use for new Vendors or when address or name needs to be updated on existing vendor. Sends an email to vendor so they can fill out vendor form and provide W-9" })
+
+                
+            <li>
+                @Html.ActionLink("Search/Maintenance", "VendorStatus", "VendorManagement", null, new { title = "Use to search, resend to vendor or request internal accounting changes." })
+            </li>
+
+
+            <li>
+                @Html.ActionLink("Create New Vendor", "CreateVendorRecord", "Create", null, new { title = "Use this if you already have a W-9 from the vendor and need to create a new vendor" })
+            </li>
+
+            @if (SecurityUtility.CheckUserRole(User) == "ConstructionUser" || SecurityUtility.CheckUserType(User) == "AdminUser")
+            {
+                <li>
+                    @Html.ActionLink("Create NonPaid Vendor", "CreateNonPaidVendor", "Create", null, new { title = "Use this to create a non-paid vendor for use in Procore only." })
+                </li>
+
+                <li>
+                    @Html.ActionLink("Create New Customer", "CreateCustomerVendor", "Create", null, new { title = "Use this to create a new Customer (no W9 needed)" })
+                </li>
+            }
+
+
+
+
+
+
+                    @if (SecurityUtility.CheckUserType(User) == "AdminUser")
+                {
+                    <li>
+                        @Html.ActionLink("Manage", "VendorStatus", "Admin")
+                    </li>
+
+                    <li>
+                        @Html.ActionLink("Export", "ExportData", "Admin")
+                    </li>
+
+                }
+
+
+                </ul>
+
+        <ul class="nav navbar-top-links navbar-right">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-child"></i> @SecurityUtility.GetSimpleUserName(User)
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+</div>
+
+

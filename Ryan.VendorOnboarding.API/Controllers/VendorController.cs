@@ -10,6 +10,7 @@ using Ryan.VendorOnboarding.API.Services;
 using Ryan.VendorOnboarding.API.Domain.Entities;
 using System.Net.Http;
 using System.Net;
+using Ryan.VendorOnboarding.API.Domain;
 
 namespace Ryan.VendorOnboarding.API.Controllers
 {
@@ -59,14 +60,20 @@ namespace Ryan.VendorOnboarding.API.Controllers
 
 
         [HttpGet]
-        public async Task<VendorProfile> GetProfileBtGuid(string guid)
+        public async Task<VendorProfile> GetProfileByGuid(string guid,string status)
         {
-            return await vendorservice.GetVendorDetails(guid);
+            return await vendorservice.GetVendorDetialsByGuidAndStatus(guid,status);
+        }
+
+        [HttpGet]
+        public async Task<VendorProfile> GetProfileByGuid(string guid)
+        {
+            return await vendorservice.GetVendorDetailsByGuid(guid);
         }
 
 
-        [HttpGet]
-        public async Task<bool> SaveVendorProfile(VendorProfile profile)
+        [HttpPost]
+        public async Task<IDbActionResult> SaveVendorProfile(VendorProfile profile)
         {
             return await vendorservice.SaveVendorDetails(profile);
         }

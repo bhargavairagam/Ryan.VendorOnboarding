@@ -1,0 +1,214 @@
+﻿
+/* This is the file to place ryan specific CSS customizations 
+**** NOTE: Be sure this css is loaded last in the layout page.
+
+*/
+.float-e-margins .btn.btn-inline {
+    margin-bottom: 0;
+}
+
+textarea.main-comments {
+    height: 178px;
+}
+
+textarea.it-comments {
+    height: 178px;
+}
+
+textarea.payroll-comments {
+    height: 75px;
+}
+
+.page-heading {
+    padding: 0;
+}
+
+.ui-autocomplete {
+    max-height: 100px;
+    overflow-x: auto;
+    /* prevent horizontal scrollbar */
+    overflow-y: hidden;
+}
+
+.ui-autocomplete-loading {
+    background: white url("plugins/jQueryUI/images/ui-anim_basic_16x16.gif") right center no-repeat;
+}
+
+.tabs-container .tabs-left .panel-body {
+    width: 90%;
+    margin-left: 10%;
+}
+
+.tabs-container .tabs-left > .nav-tabs {
+    width: 10%;
+}
+
+.form-group .grouped-field {
+    width: auto;
+    text-align: center;
+    border: 1px solid #CCC;
+    float: left;
+    margin-bottom: 15px;
+}
+
+.form-group span {
+    float: left;
+    display: inline-block;
+    margin-left: .25em;
+    margin-right: .25em;
+}
+
+.input-group-addon {
+    position: relative;
+    border-color: darkgray;
+    /*margin-bottom: 5px;*/
+}
+
+.input-group-manager {
+    margin-bottom: 15px;
+}
+
+.btn-primary {
+    background-color: #27613f;
+    border-color: #27613f;
+}
+
+.top-navigation .navbar-brand {
+    background-color: #27613f;
+}
+
+.pace .pace-progress {
+    background-color: #27613f;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    background-color: green;
+    border-color: green;
+}
+
+.top-navigation .nav > li.active > a {
+    color: #27613f;
+}
+
+.top-navigation .nav > li a:hover,
+.top-navigation .nav > li a:focus {
+    color: #27613f;
+}
+
+#iphone-options-panel-body {
+    width: 100%;
+    margin-left: 0;
+}
+
+#ipad-options-panel-body {
+    width: 100%;
+    margin-left: 0;
+}
+
+.form-control, single-line {
+    border-color: darkgray;
+}
+
+.form-group .grouped-field {
+    width: auto;
+    text-align: center;
+    border: 1px solid darkgray;
+    float: left;
+    margin-bottom: 15px;
+}
+
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus, .pagination > .active > span:focus {
+    background-color: #f4f4f4;
+    border-color: darkgray;
+    color: inherit;
+    cursor: default;
+    z-index: 2;
+}
+
+.pagination > .disabled > a, .pagination > .disabled > a:focus, .pagination > .disabled > a:hover, .pagination > .disabled > span, .pagination > .disabled > span:focus, .pagination > .disabled > span:hover {
+    color: #777;
+    cursor: not-allowed;
+    background-color: #fff;
+    border-color: darkgray;
+}
+
+.table-bordered {
+    border-color: darkgray;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    border-top: 1px solid darkgray;
+    line-height: 1.4285;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
+    border: 1px solid darkgray;
+}
+
+
+
+.custompagedclass {
+    margin: 0px !important;
+}
+
+.pagination {
+    margin: 0px !important;
+}
+
+.mandfield {
+    border: 2px solid red;
+}
+
+a.gw-light-gray-text:hover, a.gw-light-gray-text:focus, a.gw-light-gray-text:visited {
+    color: #666666;
+}
+
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #69a53a;
+}
+
+    .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
+        color: #69a53a;
+    }
+
+.gw-nav-item,
+.dropdown-menu > li > a.gw-nav-item {
+    font-size: 16px !important;
+    font-weight: bold;
+    color: #69a53a;
+}
+
+.dropdown-menu {
+    border: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    padding: 0;
+}
+
+ul.dropdown-menu {
+    border-color: #e1e1e1;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:hover, .navbar-inverse .navbar-nav > .open > a:focus {
+    color: #69a53a;
+    background-color: #fff;
+}
+
+.ibox-title {
+    background-color: #27613f !important;
+    color: #ffffff !important;
+}
+

@@ -13,7 +13,13 @@ namespace Ryan.VendorOnboarding.API.Infrastructure
             if (ex.InnerException != null)
             {
                 sbErrMsgs.Append("||");
-                sbErrMsgs.Append(GetAllExceptionMessages(ex.InnerException));
+                sbErrMsgs.Append(ex.InnerException.Message);
+                sbErrMsgs.Append("||");
+                sbErrMsgs.Append(ex.InnerException.Source);
+                sbErrMsgs.Append("||");
+                sbErrMsgs.Append(ex.StackTrace);
+                sbErrMsgs.Append("||");
+                sbErrMsgs.Append(ex.Message);
             }
 
             string[] seperators = { "||" };

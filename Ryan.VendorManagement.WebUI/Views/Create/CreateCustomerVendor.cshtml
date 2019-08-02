@@ -1,0 +1,526 @@
+﻿
+@{
+    ViewBag.Title = "CreateCustomerVendor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using Ryan.VendorManagement.WebUI.Infrastructure.Security
+<h2>Create Customer</h2>
+
+
+
+<html>
+<body>
+
+    @model Ryan.VendorManagement.WebUI.Models.vendor.VendorProfileViewModel
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="container">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+
+
+                    <div id="actualCustomer">
+                        @using (Html.BeginForm("CreateCustomerVendor", "Create", FormMethod.Post, new {  id = "vendorform" }))
+                        {
+                            @Html.AntiForgeryToken()
+
+
+
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <div class="row marbot10">
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>DBA Name<span class="reqfield">*</span></label>
+
+                                                @Html.TextBoxFor(m => m.VendorDBAName, new { @class = "form-control", @placeholder = "DBA Name", @id = "vendorDBAname", @required = "required" })
+                                                @Html.ValidationMessageFor(x => x.VendorDBAName, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>Legal Name <span class="glyphicon glyphicon-info-sign" style="float:right;" title="Enter Legal Name if its different than DBA name."></span></label>
+                                                @Html.TextBoxFor(m => m.VendorLegalName, new { @class = "form-control", @placeholder = "VendorName", @id = "vendorname"})
+                                                @Html.ValidationMessageFor(x => x.VendorLegalName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row marbot10">
+
+                                        <div class="col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>Phone Number<span class="reqfield">*</span></label>
+                                                @Html.TextBoxFor(m => m.VPhone, new { @class = "form-control", @required = "required", @placeholder = "XXX-XXX-XXXX", @id = "phonenum", onkeypress = "return isNumber(event);" })
+                                                @Html.ValidationMessageFor(x => x.VPhone, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row marbot10">
+                                        @*<div class="col-lg-6 col-md-4 col-xs-4">
+                                                <div class="form-group">
+
+                                                    <label>Person/CorpCode</label>
+                                                    @Html.DropDownListFor(m => m.PersonCorpCode, Model.PersonCorpCodes, "Select", new { @class = "form-control" })
+                                                </div>
+                                            </div>*@
+
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>Address1 <span class="reqfield">*</span></label>
+                                                @Html.TextBoxFor(m => m.VendorAddress1, new { @class = "form-control", @placeholder = "Address", @required = "required" })
+                                                @Html.ValidationMessageFor(x => x.VendorAddress1, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>FAX</label>
+                                                @Html.TextBoxFor(m => m.VFax, new { @class = "form-control", @placeholder = "XXX - XXX - XXXX", @id = "vfaxnum", onkeypress = "return isNumber(event);" })
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="row marbot10">
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>Address2</label>
+                                                @Html.TextBoxFor(m => m.VendorAddress2, new { @class = "form-control", @placeholder = "Address2" })
+                                             
+
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+
+                                    <div class="row marbot10">
+
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+
+                                                <label>City<span class="reqfield">*</span></label>
+
+                                                @Html.TextBoxFor(m => m.VendorCity, new { @class = "form-control", @placeholder = "City", @required = "required" })
+                                                @Html.ValidationMessageFor(x => x.VendorCity, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            @*<div class="form-group">
+                                                <label>Key Contact</label>
+                                                @Html.TextBoxFor(m => m.PersonSubForm, new { @class = "form-control", @placeholder = "Key Contact", @id = "personCompName" })
+
+                                            </div>*@
+                                        </div>
+
+                                    </div>
+                                    <div class="row marbot10">
+                                        <div class="col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+                                                <label>State<span class="reqfield">*</span></label>
+
+                                                @Html.DropDownListFor(m => m.VendorState, Model.States, "Select State", new { @class = "form-control", @required = "required" })
+
+                                                @Html.ValidationMessageFor(x => x.VendorState, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                        <div class=" col-lg-6 col-md-4 col-xs-4">
+                                            @*<div class="form-group">
+                                                <label>Designation(Title)</label>
+
+                                                @Html.TextBoxFor(m => m.PersonSubTitle, new { @class = "form-control", @placeholder = "Person Designation", @id = "personCompTitle" })
+
+
+                                            </div>*@
+                                        </div>
+
+
+                                    </div>
+
+
+                                    <div class="row marbot10">
+                                        <div class="col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+
+                                                <label>ZIP<span class="reqfield">*</span></label>
+                                                @Html.TextBoxFor(m => m.VendorZipCode, new { @class = "form-control", @placeholder = "xxxxx-xxxx", @id = "custzipcode", onkeypress = "return isNumber(event);", @required = "required" })
+                                                @Html.ValidationMessageFor(x => x.VendorZipCode, "", new { @class = "text-danger" })
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row marbot10">
+
+                                        <div class="col-lg-6 col-md-4 col-xs-4">
+                                            <div class="form-group">
+
+                                                <label>Country</label>
+                                                <input type="text" class="form-control" value="US" />
+
+
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+
+
+                            </div>
+
+
+
+                            <div class="row marbot10">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="ibox" style="margin-bottom:10px !important;">
+                                        <div class="ibox-content">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    @Html.CheckBox("jdebool", true, new { value = Model.JDE, @disabled = "disabled", style = "margin-right: 5px !important" })<label>JDE</label>
+
+                                                </div>
+                                                <div class="col-md-4">
+                                            @if (SecurityUtility.CheckUserRole(User) != "RBSREMUser" && SecurityUtility.CheckUserRole(User) != "GeneralUser")
+                                            {
+                                                    @Html.CheckBox("probool", true, new { value = Model.PROCORE, @disabled = "disabled", style = "margin-right: 5px !important" })<label>PROCORE</label>
+                                            }
+
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group">
+                                    <div class="col-lg-4 col-md-4">
+
+                                        <input type="submit" value="Submit" id="btnSubmit" class="btn btn-primary" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+
+
+        var counter = 0;
+
+        function AddFileUpload() {
+
+            var div = document.createElement('DIV');
+            div.classList.add("addFile");
+            div.innerHTML = '<input id="file' + counter + '" name = "upload' +
+                '" type="file" class="col-lg-6"  />' +
+                '<input id="Button' + counter + '" type="button" ' +
+                'value="Remove" onclick = "RemoveFileUpload(this)" />';
+
+
+            document.getElementById("FileUploadContainer").appendChild(div);
+
+            counter++;
+
+        }
+
+        function RemoveFileUpload(div) {
+
+            document.getElementById("FileUploadContainer").removeChild(div.parentNode);
+
+        }
+
+
+
+        function ModifyPlaceHolder1() {
+            var input = document.getElementById("VendorEIN");
+            $("#VendorEIN").val("");
+            input.placeholder = "XX-XXXXXX";
+        }
+
+        function ModifyPlaceHolder2() {
+            var input = document.getElementById("VendorEIN");
+            $("#VendorEIN").val("");
+            input.placeholder = "XXX-XXX-XXXX";
+        }
+
+
+
+        function isNumber(evt) {
+            evt = (evt) ? evt : window.event;
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+                return false;
+            }
+            return true;
+        }
+
+        $(function () {
+
+
+            $("#btnVendorWithW9").click(function (e) {
+                $("#actualNonPaid").hide();
+                $("#actualCustomer").hide();
+                $("#actualVendor").show();
+                $("#lblTitile").text("Create Vendor");
+            });
+
+            $("#btnNonPaidVendor").click(function (e) {
+                $("#actualCustomer").hide();
+                $("#actualVendor").hide();
+                $("#actualNonPaid").show();
+                $("#lblTitile").text("Create NonPaid Vendor");
+            });
+
+
+            $("#btnCustomer").click(function (e) {
+                $("#actualVendor").hide();
+                $("#actualNonPaid").hide();
+                $("#actualCustomer").show();
+                $("#lblTitile").text("Create Customer");
+            });
+
+
+
+            $("#VendorType").change(function () {
+                var status = this.value;
+
+                if (status === "V") {
+                    $("#actualNonPaid").hide();
+                    $("#actualCustomer").hide();
+                    $("#actualVendor").show();
+
+                }
+
+                if (status === "N") {
+                    $("#actualCustomer").hide();
+                    $("#actualVendor").hide();
+                    $("#actualNonPaid").show();
+
+                }
+
+                if (status === "C") {
+                    $("#actualVendor").hide();
+                    $("#actualNonPaid").hide();
+                    $("#actualCustomer").show();
+
+                }
+
+                if (status === "") {
+                    $("#actualVendor").hide();
+                    $("#actualNonPaid").hide();
+                    $("#actualCustomer").hide();
+                }
+
+            });
+
+
+
+
+            $("#chkpaymentaddress").click(function () {
+                if ($(this).is(':checked')) {
+
+                    $("#AIAddress").prop("disabled", false);
+                    $("#AIAddress2").prop("disabled", false);
+                    $("#AICity").prop("disabled", false);
+                    $("#AIState").prop("disabled", false);
+                    $("#AIZip").prop("disabled", false);
+
+                }
+                else {
+
+                    $("#AIAddress").prop("disabled", true);
+                    $("#AIAddress2").prop("disabled", true);
+                    $("#AICity").prop("disabled", true);
+                    $("#AIState").prop("disabled", true);
+                    $("#AIZip").prop("disabled", true);
+                }
+            });
+
+
+
+            $("#chkcard").click(function () {
+                if ($(this).is(':checked')) {
+                    // $("#vendorcarddetails").show();
+                    $("#crdholdername").prop("disabled", false);
+                    $("#crdholderphone").prop("disabled", false);
+                    $("#crdholderemail").prop("disabled", false);
+
+                }
+                else {
+                    //$("#vendorcarddetails").hide();
+
+                    $("#crdholdername").prop("disabled", true);
+                    $("#crdholderphone").prop("disabled", true);
+                    $("#crdholderemail").prop("disabled", true);
+                }
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+
+
+            $("#vendorform").submit(function (e) {
+
+                //stop submitting the form to see the disabled button effect
+                //  e.preventDefault();
+
+                //disable the submit button
+                $("#btnSubmit").attr("disabled", true);
+
+                return true;
+
+            });
+
+
+
+            /***phone number format***/
+            $("#phonenum, #crdholderphone,#AIPhone,#vfaxnum").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+
+                var curchr = this.value.length;
+                var curval = $(this).val();
+                if (curchr == 3) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 7) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 9) {
+
+                    $(this).attr('maxlength', '12');
+                }
+
+                //var curchr = this.value.length;
+                //var curval = $(this).val();
+                //if (curchr == 3 && curval.indexOf("(") <= -1) {
+                //    $(this).val("(" + curval + ")" + "-");
+                //} else if (curchr == 4 && curval.indexOf("(") > -1) {
+                //    $(this).val(curval + ")-");
+                //} else if (curchr == 5 && curval.indexOf(")") > -1) {
+                //    $(this).val(curval + "-");
+                //} else if (curchr == 9) {
+                //    $(this).val(curval + "-");
+                //    $(this).attr('maxlength', '14');
+                //}
+            });
+
+            //$("#phonenum").focusout(function (e) {
+
+            //    var len = this.value.length;
+            //    if (len < 12) {
+            //        alert("Please fill full phone number.");
+            //    }
+
+            //});
+
+
+            $("#vzipcode, #AIZip , #custzipcode, #npzip").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+                var curchr = this.value.length;
+                var curval = $(this).val();
+                if (curchr == 5) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 9) {
+
+                    $(this).attr('maxlength', '10');
+                }
+            });
+
+            $("#VendorEIN").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+
+                if ($("#rdSSN").is(':checked')) {
+                    var curchr = this.value.length;
+                    var curval = $(this).val();
+                    if (curchr == 3 && curval.indexOf("(") <= -1) {
+                        $(this).val(curval + "-");
+
+                    } else if (curchr == 6) {
+                        $(this).val(curval + "-");
+                    } else if (curchr == 9) {
+                        $(this).attr('maxlength', '11');
+                    }
+                }
+                else {
+                    var curchr = this.value.length;
+                    var curval = $(this).val();
+                    if (curchr == 2) {
+                        $(this).val(curval + "-");
+                    } else if (curchr == 9) {
+                        $(this).attr('maxlength', '10');
+                    }
+                }
+
+            });
+
+
+
+            $("#vendorname,#vendorDBAname,#contactfirstname , #contactlastname,#crdholdername , #personCompTitle , #personCompName ").keyup(function () {
+                var yourInput = $(this).val();
+               // re = /[`~!#$%^&*()_|+\-=?;:@@'",.<>\{\}\[\]\\\/]/gi;
+                re = /[`~!#$%^*()_|\=?;:@@'"<>\{\}\[\]\\\/]/gi;
+                //  re = /^[0 - 9a- zA - Z''- '\s]{1,40}$]/;
+                var isSplChar = re.test(yourInput);
+                if (isSplChar) {
+                    var no_spl_char = yourInput.replace(/[`~!#$%^*()_|\=?;:@@'"<>\{\}\[\]\\\/]/gi, '');
+                    $(this).val(no_spl_char);
+                }
+            });
+
+
+
+            $('#crdholderemail').focusout(function () {
+
+                $('#crdholderemail').filter(function () {
+                    var emil = $('#crdholderemail').val();
+                    var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                    if (!emailReg.test(emil)) {
+                        $('#crdholderemail').addClass("mandfield");
+                    } else {
+                        $('#crdholderemail').removeClass("mandfield");
+                    }
+                })
+            });
+        });
+
+
+
+    </script>
+
+</body>
+</html>

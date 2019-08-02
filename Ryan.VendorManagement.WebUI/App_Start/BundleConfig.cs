@@ -25,7 +25,18 @@ namespace Ryan.VendorManagement.WebUI
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css", "~/Content/ShareBoot.css", "~/Content/ryan.css", "~/Content/styles.min.css", "~/Content/jquery.dataTables.min.css", "~/Content/jquery-ui.min.css" , "~/Content/buttons.dataTables.min.css"));
+
+
+            // add jQueryUI script bundle
+            bundles.Add(new ScriptBundle("~/bundles/jquery-ui").Include(
+                        "~/Scripts/jquery-ui-1.12.1.min.js"));
+
+
+
+
+            bundles.Add(new ScriptBundle("~/bundles/datatables").Include(
+                        "~/Scripts/jquery.dataTables.min.js"));
         }
     }
 }

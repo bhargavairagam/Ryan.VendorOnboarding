@@ -1,57 +1,543 @@
 ﻿@model Ryan.VendorManagement.WebUI.Models.vendor.VendorManagementViewModel
+@using Ryan.VendorManagement.WebUI.Infrastructure.Security
 
 @{
-    ViewBag.Title = "Add New Vendor";
+    ViewBag.Title = "Invite New Vendor";
 }
 
-<h2>Add New Vendor</h2>
+<h2>Invite New Vendor</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("AddVendor","VendorManagement",FormMethod.Post, new { id = "vendorform" }))
 {
     @Html.AntiForgeryToken()
-    
-<div class="form-horizontal">
 
-    <hr />
+    <div class="form-horizontal">
 
-    <div class="form-group">
-        <label class="control-label col-md-2" >Vendor LegalName</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.VendorLegalName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.VendorLegalName, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        <label class="control-label col-md-2">Vendor EIN</label>
-    
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.VendorEIN, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.VendorEIN, "", new { @class = "text-danger" })
-        </div>
-    </div>
+        <hr />
+ 
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h2>Details</h2>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                @if (SecurityUtility.CheckUserRole(User) == "RBSREMUser" || SecurityUtility.CheckUserRole(User) == "AdminUser" || SecurityUtility.CheckUserRole(User) == "GeneralUser")
+                                {
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.MRI1) <label for="MRI1">MRI01</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="1200 UNIV, 1500 PARK , 15950 BAY VISTA, 5303 Adam St, 6550 York , ARBOR LAKES  &#13;  ARLINGTON HEIGHT, CAPITAL SQUARE, HSDEL, HSFRO, MPWDCS &#13; "></span>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.MRI2) <label for="MRI2">MRI02</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="AT&T"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                            
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.MRI12) <label>MRI12</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="CCMP & Century II"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.YARDI5) <label>YARDI05</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="ARTIS"></span>
+                                </div>
+
+                            </div>
+                         
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.YARDI7) <label>YARDI07</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="MIREF"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.YARDI8) <label>YARDI08</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="NHMC"></span>
+                                </div>
+                            </div>
 
 
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.YARDI11) <label>YARDI11</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="Empire/Citrus Park"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.YARDI14) <label>YARDI14</label>
+                                    <span class="glyphicon glyphicon-info-sign" title="City Center"></span>
+                                </div>
 
-    <div class="form-group">
-        <label class="control-label col-md-2">Vendor Email</label>
-       
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.VendorEmail, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.VendorEmail, "", new { @class = "text-danger" })
-        </div>
-    </div>
+                            </div>
 
-
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
-</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    @Html.CheckBoxFor(model => model.JDE, new { @checked = "checked", @disabled = "disabled" }) <label>JDE</label>
+                                </div>
+
+                                @if (SecurityUtility.CheckUserRole(User) == "ConstructionUser" || SecurityUtility.CheckUserRole(User) == "AdminUser" || SecurityUtility.CheckUserRole(User) == "GeneralUser")
+                                {
+                                <div class="col-md-6">
+                                    @if(SecurityUtility.CheckUserRole(User) == "ConstructionUser") {
+                                      @Html.CheckBoxFor(model => model.PROCORE, new { @checked = "checked" , @disabled = "disabled" }) <label>PROCORE</label>
+                                    }
+                                    else {
+                                    @Html.CheckBoxFor(model => model.PROCORE) <label>PROCORE</label>
+                                    }
+
+                                </div>
+
+                                }
+                            </div>
+
+                               
+
+                            </div>
+                              
+
+                          
+                            <div class="col-lg-7">
+                                <div class="row">
+
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4 ">DBA Name</label>
+                                        <div class="col-md-6">
+                                            @Html.EditorFor(model => model.VendorDBAName, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "vendorname" } })
+                                            @Html.ValidationMessageFor(model => model.VendorDBAName, "", new { @class = "text-danger" })
+                                            @Html.HiddenFor(model => Model.ID, new { id = "modelID", name = "modelID" })
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Contact First Name</label>
+
+                                        <div class="col-md-6">
+                                            @Html.EditorFor(model => model.VContactFirstName, new { htmlAttributes = new { @class = "form-control", @id = "contactfname" } })
+                                            @Html.ValidationMessageFor(model => model.VContactFirstName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Contact Last Name</label>
+
+                                        <div class="col-md-6">
+                                            @Html.EditorFor(model => model.VContactLastName, new { htmlAttributes = new { @class = "form-control", @id = "contactlname" } })
+                                            @Html.ValidationMessageFor(model => model.VContactLastName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label class="control-label col-md-4">Vendor Email</label>
+
+                                        <div class="col-md-6">
+                                            @Html.EditorFor(model => model.VendorEmail, new { htmlAttributes = new { @class = "form-control", @required = "required", @type = "email", @id = "vendoremail" } })
+                                            @Html.ValidationMessageFor(model => model.VendorEmail, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+
+                                <hr style="color:black  !important;" />
+
+                                <div class="form-group">
+                                    <label class=" col-md-12">Special Instructions</label>
+
+                                    <div class="col-md-12">
+                                        @Html.EditorFor(model => model.SpecialInstructions, new { htmlAttributes = new { @class = "form-control", @id = "specialinstructions" , @maxlength="1000"} })
+
+                                    </div>
+                                </div>
+                            </div>
+                          
+
+                        </div>
+
+                        <div class="row" style="margin-top:20px;">
+                            <div class="col-lg-4">
+
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Invite Vendor" id="btnSubmit" class="btn btn-primary" />
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="button" id="btnClearFields" value="Clear" class="btn btn-danger" />
+                                    </div>
+                                </div>
+
+                            </div>
+
+                         
+
+                        </div>
+
+                        </div>
+                </div>
+
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="panel" id="bcvendordetails" style="display:none;background-color:#ffffff; border-color:green">
+                    <div class="panel-heading">
+                        <h3>Vendor Details</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <label class="col-md-4">DBA Name</label>
+                            <div id="bcvendorname"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Legal Name</label>
+                            <div id="bcvendorlegalname"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Address </label>
+                            <div id="bcvendoraddress"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Address2 </label>
+                            <div id="bcvendoraddress2"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">City </label>
+                            <div id="bcvendorcity"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">State</label>
+                            <div id="bcvendorstate"> </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <label class="col-md-4"> ZipCode </label>
+                            <div id="bcvendorzip"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Federal ID(last 4)</label>
+                            <div id="bcvendorein"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Phone </label>
+                            <div id="bcvendorphone"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">VendorEmail </label>
+                            <div id="bcvendoremail"> </div>
+
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-4">JDE ID# </label>
+                            <div id="bcjdeid"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">SourceType </label>
+                            <div id="bcsourcetype"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Onboarding Status </label>
+                            <div id="bcstatus"> </div>
+
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-4">JDE Status </label>
+                            <div id="bcstatusinjde"> </div>
+
+                        </div>
+
+
+                        <div class="row">
+                            <label class="col-md-4">SearchType</label>
+                            <div id="bcvendortype"> </div>
+
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-4">Payment Address </label>
+                            <div id="paymentaddress"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Payment City</label>
+                            <div id="paymentcity"> </div>
+
+                        </div>
+                        <div class="row">
+                            <label class="col-md-4">Payment State</label>
+                            <div id="paymentstate"> </div>
+                        </div>
+
+                        <div class="row">
+                            <label class="col-md-4">Payment Zip</label>
+                            <div id="paymentzip"> </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+       
+    </div>
+}
+
+
+
+
+    <script type="text/javascript">
+
+    $(function () {
+
+
+        $("#btnClearFields").click(function (e) {
+
+               // e.preventDefault();
+            $("#vendorname").val('');
+            $("#contactfname").val('');
+            $("#contactlname").val('');
+            $("#vendoremail").val('');
+            $("#modelID").val('');
+            $("#specialinstructions").val('');
+
+            $("#bcvendordetails").hide();
+
+            });
+
+
+        $("#vendorform").submit(function (e) {
+
+            //stop submitting the form to see the disabled button effect
+            //  e.preventDefault();
+
+            //disable the submit button
+            $("#btnSubmit").attr("disabled", true);
+
+            return true;
+
+        });
+
+
+
+
+
+        $("#vendorname").autocomplete({
+            source: function (request, response) {
+                var item = $("#vendorname").val();
+
+                $.ajax({
+                    url: '@Url.Action("AutoComplete", "VendorManagement")',
+                    data: { prefix: request.term },
+                    dataType: "json",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        if (data.length == 0) {
+
+                            $("#bcvendordetails").hide();
+                        }
+
+
+                        response($.map(data, function (item) {
+                            return {
+                                //value is the default list value in auto compleate drop down
+                                value: item.VendorDBAName,
+                                vendorlegalname : item.VendorLegalName,
+                                vendoraddress: item.VendorAddress1 ,
+                                vendoraddress2: item.VendorAddress2,
+                                vendorcity: item.VendorCity,
+                                vendorstate: item.VendorState,
+                                vendorphone: item.VPhone,
+                                vendorzip: item.VendorZipCode,
+                                vendoremail: item.VendorEmail,
+                                ein: item.VendorEIN,
+                                jdeid: item.JDEVendorID,
+                                sourcetype: item.SourceType,
+                                vendorstatus: item.VendorStatus,
+                                vendortype: item.VendorType,
+                                statusinjde: item.STATUSINJDE,
+                                lastname: item.VendorContactLN,
+                                firstname: item.VendorContactFN,
+                                paymentaddress: item.AIAddress,
+                                paymentcity: item.AICity,
+                                paymentstate: item.AIState,
+                                paymentzip: item.AIZip,
+                                idval : item.ID
+
+                            };
+
+                        }));
+                    },
+                    error: function (response) {
+                       // alert(response.responseText);
+                    },
+                    failure: function (response) {
+                      //  alert(response.responseText);
+                    }
+                });
+            },
+            focus: function (e, i) {
+                $("#bcvendordetails").show();
+                //set value for hiden field
+                $("#bcvendorname").html('');
+                $("#bcvendorlegalname").html('');
+                $("#bcvendoraddress").html('');
+                $("#bcvendoraddress2").html('');
+                $("#bcvendorcity").html('');
+                $("#bcvendorstate").html('');
+                $("#bcvendorphone").html('');
+                $("#bcvendorein").html('');
+                $("#bcvendorzip").html('');
+                $("#bcvendoremail").html('');
+                $("#bcjdeid").html('');
+                $("#bcsourcetype").html('');
+                $("#bcstatus").html('');
+                $("#bcvendortype").html('');
+                $("#bcstatusinjde").html('');
+
+                $("#paymentaddress").html('');
+                $("#paymentstate").html('');
+                $("#paymentcity").html('');
+                $("#paymentzip").html('');
+
+                $("#bcvendorname").append(i.item.value);
+                $("#bcvendorlegalname").append(i.item.vendorlegalname);
+                $("#bcvendoraddress").append(i.item.vendoraddress);
+                $("#bcvendoraddress2").append(i.item.vendoraddress2);
+                $("#bcvendorcity").append(i.item.vendorcity);
+                $("#bcvendorstate").append(i.item.vendorstate);
+                $("#bcvendorzip").append(i.item.vendorzip);
+                $("#bcvendorphone").append(i.item.vendorphone);
+
+                if (i.item.vendortype == "V") {
+                    $("#bcvendortype").append("V-Vendor");
+                }
+                else if (i.item.vendortype == "C") {
+                    $("#bcvendortype").append("C-Customer");
+                }
+                else if (i.item.vendortype == "N") {
+                    $("#bcvendortype").append("N-Nonpaid");
+                }
+                if (i.item.ein !== "" && i.item.ein !== null ) {
+
+                    var str = i.item.ein;
+                    str = str.substr(str.length - 4);
+                    $("#bcvendorein").append(str);
+                }
+
+                $("#bcvendoremail").append(i.item.vendoremail);
+                $("#bcjdeid").append(i.item.jdeid);
+                $("#bcsourcetype").append(i.item.sourcetype);
+                $("#bcstatus").append(i.item.vendorstatus);
+
+                $("#paymentaddress").append(i.item.paymentaddress);
+                $("#paymentstate").append(i.item.paymentstate);
+                $("#paymentcity").append(i.item.paymentcity);
+                $("#paymentzip").append(i.item.paymentzip);
+
+                $("#bcstatusinjde").append(i.item.statusinjde);
+            },
+
+            select: function (e, ui) {
+                $("#contactfname").val(ui.item.firstname);
+                $("#contactlname").val(ui.item.lastname);
+                $("#vendoremail").val(ui.item.vendoremail);
+                $("#modelID").val(ui.item.idval);
+
+                //TestCode
+              //  $(this).blur();
+
+            },
+            minLength: 3,
+            /* Show spinner while loading data #2 */
+            search: function () {
+                var i = 2;
+                //$("#Customer_Name").addClass("isloading1");
+            },
+            response: function () {
+                var i = 2;
+                //  $("#Customer_Name").removeClass("isloading1");
+            }
+
+
+        }).blur(function (event) {
+
+            var i = 2;
+          //  $("#bcvendordetails").hide();
+        }
+
+
+        );
+
+
+    });
+
+
+    $(document).ready(function () {
+
+
+        $("#vendorname, #contactlname, #contactfname").keyup(function () {
+            var yourInput = $(this).val();
+            re = /[`~!#$%^*()_|=?;:@@'"<>\{\}\[\]\\\/]/gi;
+            var isSplChar = re.test(yourInput);
+            if (isSplChar) {
+                var no_spl_char = yourInput.replace(/[`~!#$%^*()_|=?;:@@'"<>\{\}\[\]\\\/]/gi, '');
+                $(this).val(no_spl_char);
+            }
+        });
+
+
+
+
+
+
+    });
+
+    </script>

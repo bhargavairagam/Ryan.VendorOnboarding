@@ -35,12 +35,22 @@ namespace Ryan.VendorOnboarding.API.Domain.Concrete
 
 
 
+        public async Task<VendorProfile> GetVendorDetialsByGuidAndStatus(string guid, string status)
+        {
+
+            return await Task<VendorProfile>.Factory.StartNew(() =>
+            {
+                return context.VendorProfiles.Where(a => a.VendorGuid == guid && a.VendorStatus == status ).FirstOrDefault();
+            });
+
+        }
+
         public async Task<VendorProfile> GetVendorDetialsByGuid(string guid)
         {
 
             return await Task<VendorProfile>.Factory.StartNew(() =>
             {
-                return context.VendorProfiles.Where(a => a.VendorGuid == guid).FirstOrDefault();
+                return context.VendorProfiles.Where(a => a.VendorGuid == guid ).FirstOrDefault();
             });
 
         }
@@ -56,8 +66,9 @@ namespace Ryan.VendorOnboarding.API.Domain.Concrete
                 results.SavedID = context.SaveChanges();
             }
             catch(Exception ex) {
-                errors.Add("Cannot find custompage to update");
+                
                 errors.AddRange(ErrorHelper.GetAllExceptionMessages(ex));
+               
             }
             results.Errors = errors;
 

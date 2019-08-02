@@ -44,32 +44,44 @@ namespace Ryan.VendorOnboarding.API.Services
             return vdetails;
         }
 
+      
+
         public async Task<VendorProfile> GetVendorDetailsByGuid(string guid)
         {
             VendorProfile vdetails = new VendorProfile();
+
+            // check status of vendor. Get only submitted status vendors
+
 
             vdetails = await vendorRepo.GetVendorDetialsByGuid(guid);
 
             return vdetails;
         }
 
-
-
-        public async Task<bool> SaveVendorDetails(VendorProfile vdetails)
+        public async Task<VendorProfile> GetVendorDetialsByGuidAndStatus(string guid,string status)
         {
+            VendorProfile vdetails = new VendorProfile();
 
-            IDbActionResult res = new EFDbActionResult(); 
-            // check if profile already exists
-            VendorProfile vdet = await vendorRepo.GetVendorDetials(vdetails.VendorEIN);
-            if(vdet.VendorEIN != "")
-            {
-                res = await vendorRepo.SaveVendorDetials(vdetails);
-            }
-             
+            // check status of vendor. Get only submitted status vendors
+            vdetails = await vendorRepo.GetVendorDetialsByGuidAndStatus(guid, status);
 
-            return res.Succeeded;
+            return vdetails;
         }
 
+
+
+        public async Task<IDbActionResult> SaveVendorDetails(VendorProfile vdetails)
+        {
+
+            IDbActionResult res = new EFDbActionResult();
+            if(vdetails.ID > 0)
+            {
+                vdetails.LastUpdatedTime = DateTime.Now;
+            }
+            res = await vendorRepo.SaveVendorDetials(vdetails);
+            return res;
+        }
+        
        
     }
 }

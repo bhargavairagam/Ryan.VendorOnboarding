@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+
+
+@using Ryan.VendorManagement.WebUI.Models.vendor
+
+@model List<VendorProfileViewModel>
+
+
+
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2> Home</h2>
+    </div>
+    <!-- /.col -->
+    <div class="col-lg-2">
+    </div>
+    <!-- /.col -->
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h2>Vendor Results</h2>
+                </div>
+
+                <div class="ibox-content">
+                    <table id="nakjsnd" class="table table-bordered table-striped table-hover datatables-search-results" style="margin-top:20px">
+                        <thead>
+                            <tr>
+
+
+                                <th class="customheader">Legal Name</th>
+                                <th class="customheader">JDE ID</th>
+                                <th class="customheader">Status</th>
+                                <th class="customheader">Email</th>
+
+                            </tr>
+                        </thead>
+
+
+
+                    </table>
+
+                </div>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+@Scripts.Render("~/bundles/datatables")
+
+
+@*<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>*@
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+
+
+        var obj = {};
+
+        $.ajax({
+            url: '@Url.Action("GetVendorList", "VendorManagement")',
+            type: 'GET',
+
+            success: function (data) {
+                obj = data;
+
+            },
+            error: function (jqXHR) {
+                console.error(JSON.stringify(jqXHR));
+
+            }
+          }
+        ).done(function(){
+            $('.datatables-search-results').DataTable({
+
+
+                data: obj,
+
+                columns: [
+
+                    { "data": "VendorLegalName"} ,
+                    { "data": "JDEVendorID" },
+                    { "data": "VendorStatus" },
+                    { "data": "VendorEmail" }
+                ],
+                length: 20,
+                order: []
+
+            });
+
+
+
+        })
+
+
+    });
+
+
+
+</script>
+
+

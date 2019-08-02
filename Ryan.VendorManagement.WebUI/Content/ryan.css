@@ -24,7 +24,7 @@ textarea.payroll-comments {
 }
 
 .ui-autocomplete {
-    max-height: 100px;
+    max-height: 250px;
     overflow-x: auto;
     /* prevent horizontal scrollbar */
     overflow-y: hidden;
@@ -147,10 +147,25 @@ textarea.payroll-comments {
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
     border-top: 1px solid darkgray;
     line-height: 1.4285;
-    padding: 8px;
+    padding: 5px !important;
     vertical-align: top;
 }
 
 .table-bordered > thead > tr > th, .table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td {
     border: 1px solid darkgray;
+}
+
+
+
+.custompagedclass {
+    margin:0px !important;
+}
+
+.pagination {
+    margin:0px !important;
+}
+
+.reqfield {
+    color:red;
+    float:right !important;
 }

@@ -1,0 +1,42 @@
+﻿
+
+@model Ryan.VendorManagement.WebUI.Models.vendor.VendorProfileViewModel
+
+
+<div class="col-lg-12" style="padding-left:0px !important">
+
+    <div class="col-lg-8 form-group has-feedback" style="padding-left:0px !important">
+        <label class="control-label" for="ein">Vendor EIN/SSN</label>
+        @*@Html.EditorFor(model => model.VendorEIN, new { htmlAttributes = new { @class = "form-control", @placeholder = "EIN", @id = "VendorEIN", @name = "ein", onkeypress = "return isNumber(event);" } })*@
+
+        <div class="right-add-on" id="divvalidate">
+            <input type="text" class="form-control" name="ein" id="VendorEIN" value="@Model.VendorEIN" placeholder="EIN" >
+            @*@Html.EditorFor(model => model.VendorEIN, new { htmlAttributes = new { @class = "form-control", @placeholder = "EIN/SSN", @id = "VendorEIN", @name = "ein" } })*@
+
+            <input type="hidden" value="@Model.ID" />
+            @if (Model.IsEINValid)
+    {
+        <span class="form-control-feedback glyphicon glyphicon-ok" id="gifok" style="color:green"></span>
+}
+
+        </div>
+    </div>
+    <div class="col-lg-2" >
+
+
+        @if (!Model.IsEINValid)
+        {
+            @*<button id="chkValidEIN" class="btn btn-primary"  formaction="@Url.Action("ValidateFederalID")" formmethod="post"> <span>&#10004;</span> Validate</button>*@
+            <input type="button" id="chkValidEIN" class="btn btn-primary" value="&#10004; Validate" style="margin-top:22px;">
+        }
+
+
+        @*@Html.CheckBoxFor(m => m.IsEINValid, @Model.IsEINValid ? (object)new { @disabled = "disabled" } : new { @id = "chkValidEIN" }) Val*@
+
+
+    </div>
+</div>
+
+
+
+

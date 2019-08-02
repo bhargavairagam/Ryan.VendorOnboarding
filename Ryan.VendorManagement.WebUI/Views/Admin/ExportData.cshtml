@@ -1,0 +1,240 @@
+﻿@{
+    ViewBag.Title = "Export Data";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="row">
+    <div class="col-lg-10">
+        <div class="panel">
+            <div class="panel-heading">
+            </div>
+            <div class="panel-body">
+                <div class="row">
+
+                    @*<div class="col-lg-2 col-md-3">
+
+                            @Html.TextBox("SearchText", ViewBag.FilterValue as string, new { @class = "form-control", @style = "width:400px", @id = "txtSearchBox" })
+
+                        </div>*@
+                    <div class="col-lg-3 col-md-3">
+
+                        <div class="form-group">
+                            <label>Package</label>
+                            @Html.DropDownList("Package", (IEnumerable<SelectListItem>)ViewBag.Packages, "select ", new { @class = "form-control", @id = "ddlPackage" })
+                        </div>
+
+                    </div>
+                    <div class="col-lg-3 col-md-3">
+
+                        <div class="form-group">
+                            <label>Status</label>
+                            @Html.DropDownList("Status", (IEnumerable<SelectListItem>)ViewBag.Statuses, "select ", new { @class = "form-control", @id = "ddlStatus" })
+                        </div>
+
+
+
+
+                    </div>
+                    <div class="col-lg-2 col-md-3">
+                        <input type="submit" value="Search" id="btnStatusDetails" class="btn btn-primary" style="margin-top:20px;" />
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </div>
+
+
+</div>
+
+
+
+<div class="wrapper wrapper-content animated fadeInRight">
+
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h2>Vendor Results</h2>
+                </div>
+
+                <div class="ibox-content">
+                    <table id="nakjsnd" class="table table-bordered table-striped table-hover datatables-search-results" style="margin-top:20px">
+                        <thead>
+                            <tr>
+                                <th class="customheader">DBAName</th>
+                                <th class="customheader">JDE ID</th>
+                                <th class="customheader">Status</th>
+                                <th class="customheader">Email</th>
+                                <th class="customheader">EIN</th>
+                                <th class="customheader">Address</th>
+                                <th class="customheader">City</th>
+                                <th class="customheader">State</th>
+                                <th class="customheader">Zip</th>
+                                <th class="customheader">FirstName</th>
+                                <th class="customheader">LastName</th>
+
+                                <th class="customheader">MRI1</th>
+                                <th class="customheader">MRI2</th>
+                                <th class="customheader">MRI10</th>
+                                <th class="customheader">MRI12</th>
+
+                                <th class="customheader">YARDI5</th>
+                                <th class="customheader">YARDI6</th>
+                                <th class="customheader">YARDI7</th>
+                                <th class="customheader">YARDI8</th>
+
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+
+        $("#btnStatusDetails").click(function (e) {
+            var obj = {};
+           
+           
+
+           // var name1 = $("#txtSearchBox").val();
+            var package1 = $("#ddlPackage").val();
+            var status1 = $("#ddlStatus").val();
+
+            $.ajax({
+                url: '@Url.Action("GetVendorByAdvanceSearch", "Admin")',
+                cache: false,
+                type: 'GET',
+                contentType: 'application/json; charset=utf-8',
+                data: { status: status1, package: package1 },
+                success: function (data) {
+                   
+                    obj = data;
+                    
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(JSON.stringify(jqXHR));
+                }
+            }).done(function () {
+                $('.datatables-search-results').dataTable();
+
+                $('.datatables-search-results').DataTable({
+                    dom: 'Bfrtip',
+                    data: obj,
+                    stateSave: true,
+                    scrollX: true,
+                    destroy: true,
+                    columns: [
+
+                        {
+                            "data": "VendorDBAName"
+
+                        },
+                       
+                        
+                        { "data": "JDEVendorID" },
+                        { "data": "VendorStatus" },
+                        {
+                            "data": "VendorEmail"
+                           
+                        },
+                      
+                        {
+                            "data": "VendorEIN"
+                        },
+                        {
+                            "data": "VendorAddress1"
+                        },
+                        {
+                            "data": "VendorCity"
+                        },
+                        {
+                            "data": "VendorState"
+                        },
+                        {
+                            "data": "VendorZipCode"
+                        },
+                        {
+                            "data": "VendorContactFN"
+                        },
+                        {
+                            "data": "VendorContactLN"
+                        },
+                        {
+                            "data": "MRI1"
+                        },
+                        {
+                            "data": "MRI2"
+                        },
+                        {
+                            "data": "MRI3"
+                        },
+                        {
+                            "data": "MRI4"
+                        },
+                        {
+                            "data": "YARDI5"
+                        },
+                        {
+                            "data": "YARDI6"
+                        },
+                        {
+                            "data": "YARDI7"
+                        },
+                        {
+                            "data": "YARDI8"
+                        }
+
+                    ],
+                    buttons: ['csv'],
+                    length: 20,
+                    order: []
+
+                });
+
+
+
+            });
+
+
+        });
+
+    })
+
+
+</script>
+
+
+
+

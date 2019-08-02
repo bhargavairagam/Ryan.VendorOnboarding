@@ -3,28 +3,52 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Onboarding | @ViewBag.Title </title>
+    <title>Vendor Onboarding </title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 
     <link href="~/Content/ryan.css" rel="stylesheet" />
-   
-           
-           </head>
-<body style="padding-top:0px;">
-    
-    
-    <div class="container body-content">
-       
+
+ 
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    <script src="~/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+</head>
+<body class="top-navigation">
+    <div id="page-wrapper" class="Index">
+
+
+
+        <div class="row border-bottom white-bg">
+            <nav class="navbar navbar-static-top" role="navigation">
+                <div class="navbar-header" style="background-color:#ffffff;">
+                    <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
+                        <i class="fa fa-reorder"></i>
+                    </button>
+                    <a href="@Url.Action("Index","Home")" >
+                    
+                    <img src="~/Content/Ryan_1.5inch_CMYK.jpg" style="height:60px !important"  />
+                    </a>
+                </div>
+
+
+            </nav>
+        </div>
+
 
         @RenderBody()
         <hr />
         <!-- Footer -->
         @Html.Partial("_Footer")
-    </div>
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @RenderSection("scripts", required: false)
+
+    </div>
+ 
+   
+
 </body>
 </html>

@@ -1,0 +1,228 @@
+﻿<h2>Vendor Status</h2>
+
+@model IEnumerable<Ryan.VendorManagement.WebUI.Models.vendor.VendorProfileViewModel>
+@using Ryan.VendorManagement.WebUI.Infrastructure;
+
+@using (Html.BeginForm("VendorStatus", "VendorManagement", FormMethod.Post))
+{
+
+    <div class="row">
+        <div class="col-lg-10">
+            <div class="panel">
+                <div class="panel-heading">
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <label>Search Text </label>
+                                @Html.TextBox("SearchText", ViewBag.FilterValue as string, new { @class = "form-control", @style = "width:400px", @id = "txtSearchBox", @placeholder = "Search Text" })    @Html.CheckBox("SearchBy", false) <text>Starts with</text>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <label>Submitted Date</label>
+                                @Html.TextBox("SubmittedDate", ViewBag.FilterDate as string, new { @class = "form-control date-picker", @style = "width:400px", @placeholder = "Select Date" })
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <div class="form-group">
+                                <label>JDE ID#</label>
+                                @Html.TextBox("jdeid", ViewBag.jdeid as string, new { @class = "form-control", @style = "width:400px", @placeholder = "JDE ID" })
+                            </div>
+                        </div>
+
+                        <div class="col-lg-3 col-md-3">
+                            <input type="submit" value="Search" class="btn btn-primary" style="margin-top:20px;" />
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<div style="margin-top:30px; background-color:#ffffff;width:90%;overflow:auto">
+    <div class="panel-heading">
+
+    </div>
+    <div class="panel-body" style="overflow:auto;height:550px;">
+
+        <table class="table table-bordered table-striped table-hover">
+            <tr>
+                <th style="width:250px;"> DBAName </th>
+                <th class="customheader" style="width:200px;">LegalName</th>
+                <th class="customheader">JDE ID#</th>
+                <th class="customheader">SearchType</th>
+                <th title="Onboarding Status"> Onboarding Status</th>
+                <th class="customheader" title="Status in JDE">JDE Status</th>
+
+                <th class="customheader">Last 4 EIN/SSN</th>
+                <th class="customheader" style="width:200px;">Address1</th>
+                <th class="customheader">Address2</th>
+                <th class="customheader">City</th>
+                <th class="customheader">State</th>
+                <th class="customheader">Zip</th>
+                <th class="customheader">PhoneNumber</th>
+                <th class="customheader" style="width:150px;">Payment Address</th>
+                <th class="customheader">Payment City</th>
+                <th class="customheader">Payment State</th>
+                <th class="customheader">Payment Zip</th>
+
+
+
+            </tr>
+            @if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+            <tr>
+                <td >
+                    <a href="@Url.Action("VendorDetails", "VendorManagement",new { vid=item.ID }) "> @item.VendorDBAName</a>
+
+                </td>
+                <td  >
+                    @item.VendorLegalName
+                </td>
+                <td >
+                    @item.JDEVendorID
+                </td>
+                <td>
+                    @item.VendorType
+                </td>
+                <td>
+                    @item.VendorStatus
+                </td>
+                <td>
+                    @item.JDEStatus
+                </td>
+
+                <td>
+                    @HelperClass.ReturnLastFour(item.VendorEIN)
+                </td>
+                <td>
+                    @item.VendorAddress1
+                </td>
+                <td>
+                    @item.VendorAddress2
+                </td>
+                <td>
+                    @item.VendorCity
+                </td>
+                <td>
+                    @item.VendorState
+                </td>
+                <td>
+                    @item.VendorZipCode
+                </td>
+                <td>
+                    @item.VPhone
+                </td>
+                <td>
+                    @item.AIAddress
+                </td>
+                <td>
+                    @item.AICity
+                </td>
+                <td>
+                    @item.AIState
+                </td>
+                <td>
+                    @item.AIZip
+                </td>
+            </tr>
+                }
+
+
+            }
+
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+<script type="text/javascript">
+
+    $(function () {
+
+        $('.date-picker').datepicker();
+
+
+            $("#txtSearchBox").autocomplete({
+            source: function (request, response) {
+                var item = $("#txtSearchBox").val();
+                if (item.length < 2) {
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("AutoComplete", "VendorManagement")',
+                    data: { prefix: request.term },
+                    dataType: "json",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+
+                        response($.map(data, function (item) {
+                            return {
+                                //value is the default list value in auto compleate drop down
+                                value: item.VendorDBAName
+
+                            };
+
+                        }));
+                    },
+                    error: function (response) {
+                       // alert(response.responseText);
+                    },
+                    failure: function (response) {
+                      //  alert(response.responseText);
+                    }
+                });
+                },
+            select: function (e, i) {
+
+                //set value for hiden field
+                $("#txtSearchBox").val(i.item.Value);
+
+            },
+
+
+            minLength: 2,
+            /* Show spinner while loading data #2 */
+            search: function () {
+                var i = 2;
+                //$("#Customer_Name").addClass("isloading1");
+            },
+            response: function () {
+                var i = 2;
+                //  $("#Customer_Name").removeClass("isloading1");
+            }
+
+
+        }).blur(function (event) {
+
+            var i = 2;
+
+        }
+
+
+            );
+
+
+    });
+
+
+
+
+</script>

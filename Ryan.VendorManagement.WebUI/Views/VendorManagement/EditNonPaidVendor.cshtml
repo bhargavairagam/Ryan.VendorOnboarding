@@ -1,0 +1,605 @@
+﻿
+@model Ryan.VendorManagement.WebUI.Models.vendor.VendorProfileViewModel
+@using Newtonsoft.Json;
+@using Newtonsoft.Json.Converters;
+@using System.IO;
+
+@{
+    ViewBag.Title = "Edit NonpPaidVendor";
+
+    var JsonModel = JsonConvert.SerializeObject(Model);
+}
+
+
+<style>
+    .right-add-on {
+        position: relative;
+    }
+
+        .right-add-on span {
+            position: absolute;
+            padding-top: 10px;
+            padding-left: 250px;
+        }
+</style>
+
+
+@using (Html.BeginForm("EditVendor", "VendorManagement", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-8">
+            <h2> Manage Vendor</h2>
+        </div>
+        <!-- /.col -->
+        <div class="col-lg-4">
+
+            <div class="col-md-4" style="margin-top:10px;">
+
+                @if (Model.VendorStatus == "InviteSent" || Model.VendorStatus == "Cancelled")
+                {
+                    <button name="button" formaction="@Url.Action(" ResendToCustomer")" id="btnResendToCustomer" value="Resend" class="btn btn-primary" formnovalidate>ResendInvite</button>
+                }
+            </div>
+            <div class="col-md-2" style="margin-top:10px;">
+                <button name="button" formaction="@Url.Action(" EditVendor")" formmethod="post" value="Save" class="btn btn-primary">Save</button>
+            </div>
+            <div class="col-md-4" style="margin-top:10px;margin-left:15px;">
+                @if (Model.VendorType == "V" || Model.VendorType == "C")
+                {
+                    <button name="button" id="btnExportJDE" value="ExportJDE" class="btn btn-danger" @((Model.IsEINValid == false) ? "disabled" : "" )>Export to JDE</button>
+                }
+
+
+            </div>
+        </div>
+        <!-- /.col -->
+    </div>
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title" >
+                        <h5>Vendor Information</h5>
+                    </div>
+
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>DBA Name</label>
+                                    @Html.EditorFor(model => model.VendorDBAName, new { htmlAttributes = new { @class = "form-control", @required = "required", @id = "vendorDBAname" } })
+                                    @Html.ValidationMessageFor(model => model.VendorDBAName, "", new { @class = "text-danger" })
+                                </div>
+
+
+                            </div>
+                            <div class="col-lg-6">
+                                <label>Onboarding Status</label>
+                                @Html.DropDownListFor(m => m.VendorStatus, Model.Statuses, "select one", new { @class = "form-control" })
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Legal Name</label>
+                                    @Html.EditorFor(model => model.VendorLegalName, new { htmlAttributes = new { @class = "form-control", @id = "vendorname" } })
+                                    @Html.ValidationMessageFor(model => model.VendorLegalName, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+
+                                    <label>Contact First Name</label>
+                                    @Html.EditorFor(model => model.VContactFirstName, new { htmlAttributes = new { @class = "form-control", @id = "contactfirstname" } })
+                                    @Html.ValidationMessageFor(model => model.VContactFirstName, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Contact Last Name</label>
+                                    @Html.EditorFor(model => model.VContactLastName, new { htmlAttributes = new { @class = "form-control", @id = "contactlastname" } })
+                                    @Html.ValidationMessageFor(model => model.VContactLastName, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address1</label>
+                                    @Html.EditorFor(model => model.VendorAddress1, new { htmlAttributes = new { @class = "form-control", @placeholder = "Street" } })
+                                    @Html.ValidationMessageFor(model => model.VendorAddress1, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Phone number</label>
+                                    @Html.EditorFor(model => model.VPhone, new { htmlAttributes = new { @class = "form-control", @id = "phonenum", @placeholder = "xxx-xxx-xxxx", onkeypress = "return isNumber(event);" } })
+                                    @Html.ValidationMessageFor(model => model.VPhone, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Address2</label>
+                                    @Html.EditorFor(model => model.VendorAddress2, new { htmlAttributes = new { @class = "form-control", @placeholder = "Suite" } })
+                                    @Html.ValidationMessageFor(model => model.VendorAddress2, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Fax</label>
+                                    @Html.EditorFor(model => model.VFax, new { htmlAttributes = new { @class = "form-control", @placeholder = "xxx-xx-xxxx", @id = "faxnum", onkeypress = "return isNumber(event);" } })
+                                    @Html.ValidationMessageFor(model => model.VFax, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    @Html.EditorFor(model => model.VendorCity, new { htmlAttributes = new { @class = "form-control", @id = "vcity", @placeholder = "City" } })
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Email</label>
+                                    @Html.EditorFor(model => model.VendorEmail, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.VendorEmail, "", new { @class = "text-danger" })
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>State</label>
+
+                                    @Html.DropDownListFor(m => m.VendorState, Model.States, "Select State", new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                @*<div class="form-group">
+
+                                        <label>Submitted By</label>
+                                        @Html.EditorFor(model => model.PersonSubForm, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.PersonSubForm, "", new { @class = "text-danger" })
+                                    </div>*@
+
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>ZipCode</label>
+                                    @Html.EditorFor(model => model.VendorZipCode, new { htmlAttributes = new { @class = "form-control", @id = "vzipcode", @placeholder = "XXXXX-XXXX" } })
+                                    @Html.ValidationMessageFor(model => model.VendorZipCode, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Person Title</label>
+                                    @Html.EditorFor(model => model.PersonSubTitle, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.PersonSubTitle, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Payment Terms <span class="glyphicon glyphicon-info-sign" style="float:right;" title="If you do not know, leave this at Default or select Default."></span>  </label>
+                                    @Html.DropDownListFor(model => model.PaymentTerm, Model.PaymentTerms, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>PersonCorpCode  <span class="glyphicon glyphicon-info-sign" style="float:right;" title="C-Corp = C-Corp or S-Corp.&#13; N-Partnership/LLC = Non Corp (Partnership/LLC) &#13; G–Govt = Government or Non-Profit &#13; P–individual = Individual/Single member LLC/Sole Proprietor"></span>  </label>
+                                    @Html.DropDownListFor(model => model.PersonCorpCode, Model.PersonCorpCodes, "Select CorpCode", new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>SearchType</label>
+                                    @Html.EditorFor(model => model.VendorType, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>JDE ID#</label>
+                                    @Html.EditorFor(model => model.JDEVendorID, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>JDE Status</label>
+                                    @Html.DropDownListFor(model => model.JDEStatus, Model.JDEStatuses, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label>Requested User Email</label>
+                                    @Html.EditorFor(model => model.RequestedUserEmail, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-group">
+                                    <label>Reason for Status Change</label>
+                                    @Html.TextAreaFor(model => model.StatusChangeReason, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-4">
+                <div class="row">
+
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title" >
+                            <h5>History of Events</h5>
+                        </div>
+
+                        <div class="ibox-content">
+                            <table id="nakjsnd" class="table table-bordered table-striped table-hover datatables-search-results" style="margin-top:20px">
+                                <thead>
+                                    <tr>
+                                        <th class="customheader"></th>
+                                        <th class="customheader">Updated By</th>
+                                        <th class="customheader">Date</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @if (Model.StatusHistoryList != null)
+                                    {
+                                        foreach (var item in Model.StatusHistoryList)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <input type="button" class="btn-default" onclick="GetDetails(@item.ID);" value="Details" />
+                                                </td>
+
+                                                <td>
+                                                    @item.UpdatedBy
+
+                                                </td>
+                                                <td>
+                                                    @item.UpdatedTime.ToShortDateString()
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+
+        <div class="row marbot10">
+            <div class="col-lg-8 col-md-8 col-xs-8">
+                <div class="ibox" style="margin-bottom:10px !important;">
+                    <div class="ibox-title" >
+                        <h5> <label>Packages Info </label></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-md-4">
+                                @Html.CheckBox("jdebool", true, new { value = Model.JDE, @disabled = "disabled", style = "margin-right: 5px !important" })<label>JDE</label>
+                            </div>
+                            <div class="col-md-4">
+                                @Html.CheckBoxFor(model => model.PROCORE) <label>PROCORE</label>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="modal fade" role="dialog" id="gw-announcements-model-pop" tabindex="-1" style="z-index:1099;">
+
+            <div class="modal-dialog" role="document">
+                <div class="modal-content" style="width:800px;">
+                    <div class="modal-header success">
+
+                        <h4>Details</h4>
+
+                    </div>
+                    <div class="modal-body">
+
+
+                        <table>
+                            <tr style="padding-bottom:10px;">
+                                <td style="width:100px;"><b>Updated By</b></td>
+                                <td> <div id="statusBy">  </div></td>
+                            </tr>
+
+                            <tr>
+                                <td><b>Change</b></td>
+                                <td><div id="statusText">  </div> </td>
+                            </tr>
+                        </table>
+
+
+
+
+                    </div>
+
+                    <div class="modal-footer" style="margin-top:0px;padding-top:10px;">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+
+}
+
+
+
+
+
+<script type="text/javascript">
+
+
+    var counter = 0;
+    function AddFileUpload() {
+
+        var div = document.createElement('DIV');
+        div.classList.add("addFile");
+        div.innerHTML = '<input id="file' + counter + '" name = "upload' +
+            '" type="file" class="col-lg-6"  />' +
+            '<input id="Button' + counter + '" type="button" ' +
+            'value="Remove" onclick = "RemoveFileUpload(this)" />';
+
+
+        document.getElementById("FileUploadContainer").appendChild(div);
+
+        counter++;
+
+    }
+
+    function RemoveFileUpload(div) {
+
+        document.getElementById("FileUploadContainer").removeChild(div.parentNode);
+
+    }
+
+          function GetDetails(id) {
+
+              var hiddenField = id;
+              $("#statusBy").empty();
+              $("#statusDate").empty();
+              $("#statusText").empty();
+                     $.ajax({
+                    url: '@Url.Action("GetStatusHistoryFromID", "VendorManagement")',
+                    cache: false,
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { id: hiddenField },
+                    success: function (data) {
+                        $("#statusBy").append(data.UpdatedBy);
+                        $("#statusDate").append(data.UpdatedTime);
+                        $("#statusText").append(data.Description);
+                        $('#gw-announcements-model-pop').modal('show');
+
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(JSON.stringify(jqXHR));
+                    }
+                    })
+    }
+
+
+
+        $(function () {
+
+
+
+            //var xraw = @Html.Raw(JsonModel);
+
+
+            //if (xraw.IsEINValid) {
+
+            //    $("#divvalidate").append('<span class="form-control-feedback glyphicon glyphicon-ok" id="gifok" style="color:green"></span>');
+            //    $("#VendorEIN").prop("readonly", true);
+
+            //}
+
+            $("#btnStatusDetails").click(function (e) {
+                var hiddenField = $(this).parent().find('.myHidden').val();
+
+                      $.ajax({
+                    url: '@Url.Action("GetStatusHistoryFromID", "VendorManagement")',
+                    cache: false,
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { id: hiddenField },
+                    success: function (data) {
+
+                        $('#gw-announcements-model-pop').modal('show');
+
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(JSON.stringify(jqXHR));
+                    }
+                    });
+            });
+
+
+
+
+            $("#chkValidEIN").click(function (e) {
+
+               // e.preventDefault();
+
+                    var fedrid = $("#VendorEIN").val();
+                    var vendorname = $("#vendorname").val();
+                    var hiddenField = $(this).parent().find('.myHidden').val();
+                    var id = $("#myHidden").val()
+
+
+                      $.ajax({
+                    url: '@Url.Action("ValidateFederalID", "VendorManagement")',
+                    cache: false,
+                    type: 'GET',
+                    contentType: 'application/json; charset=utf-8',
+                    data: { fedid: fedrid, vendname: vendorname , vendorid : id },
+                    success: function (data) {
+                        if (data == true) {
+                            $("#divvalidate").append('<span class="form-control-feedback glyphicon glyphicon-ok" id="gifok" style="color:green"></span>');
+                            $("#chkValidEIN").hide();
+                            $("#VendorEIN").prop("disabled", true);
+                            $("#btnExportJDE").prop("disabled", false);
+                            alert("Validation successful!!");
+                        }
+                        else {
+                            alert("ERROR !!!   Fed ID and Compnay does not exist in system.");
+                        }
+
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(JSON.stringify(jqXHR));
+                    }
+                    });
+
+
+
+            });
+
+
+
+            function receiveResponse(response) {
+                if (response != null) {
+
+                }
+            }
+
+
+        });
+
+
+        $(document).ready(function () {
+
+
+            $("#vzipcode, #AIZip").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+                var curchr = this.value.length;
+                var curval = $(this).val();
+                if (curchr == 5) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 9) {
+
+                    $(this).attr('maxlength', '10');
+                }
+            });
+
+
+
+        /***phone number format***/
+            $("#phonenum, #AIPhone, #faxnum").keypress(function (e) {
+            if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                return false;
+            }
+            var curchr = this.value.length;
+            var curval = $(this).val();
+            if (curchr == 3  ) {
+                $(this).val( curval + "-");
+            }  else if (curchr == 7) {
+                $(this).val(curval + "-");
+            } else if (curchr == 9) {
+
+                $(this).attr('maxlength', '12');
+            }
+        });
+
+
+
+            $("#vendorname,#vendorDBAname, #contactfirstname , #contactlastname , #vcity , #AIName").keyup(function()
+	        {
+		            var yourInput = $(this).val();
+                    re = /[`~!#$%^*()_|\=?;:@@"<>\{\}\[\]\\\/]/gi;
+                  //  re = "^[0 - 9a- zA - Z''- '\s]{1,40}$";
+		            var isSplChar = re.test(yourInput);
+		            if(isSplChar)
+		            {
+			            var no_spl_char = yourInput.replace(/[`~!#$%^*()_|\=?;:@@'"<>\{\}\[\]\\\/]/gi, '');
+			            $(this).val(no_spl_char);
+                    }
+
+	        });
+
+
+
+    });
+
+
+    function isNumber(evt) {
+        evt = (evt) ? evt : window.event;
+        var charCode = (evt.which) ? evt.which : evt.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+            return false;
+        }
+        if (evt.key)
+
+            return true;
+        }
+
+
+
+
+</script>

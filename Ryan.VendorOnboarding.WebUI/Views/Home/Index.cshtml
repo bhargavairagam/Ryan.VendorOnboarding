@@ -1,72 +1,541 @@
-﻿<!DOCTYPE html>
+﻿@{
+    ViewBag.Title = "Ryan Vendor Invite";
+
+
+}
+
+@using Newtonsoft.Json;
+<style>
+    .addFile {
+        margin-bottom: 10px;
+    }
+
+    .tooltip {
+        position: relative;
+        display: inline-block;
+        border-bottom: 1px dotted black;
+    }
+</style>
+
 <html>
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vendor Onboarding | </title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
 
 
-    <link href="~/Content/ShareBoot.css" rel="stylesheet" />
-    <style>
-        .header {
-            height: 70px;
-            background: green;
-            margin-bottom: 20px;
-            padding-top: 10px;
-            text-align: center;
+<body>
+    @using Ryan.VendorOnboarding.WebUI.Models
+    @model VendorViewModel
+
+    @{
+
+
+        var JsonModel = JsonConvert.SerializeObject(Model);
+    }
+
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+
+
+
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "vendorform" }))
+        {
+            @Html.AntiForgeryToken()
+
+
+
+            <div class="container">
+
+                <div class="ibox float-e-margins">
+
+
+
+                    <div class="ibox-title">
+                        <h2>Ryan Companies Vendor Details</h2>
+                    </div>
+                    <div class="ibox-content">
+
+                        <div class="row">
+
+                            <div class="col-lg-7">
+                                <div class="row marbot10">
+
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>DBA Name</label>
+
+                                            @Html.TextBoxFor(m => m.VendorDBAName, new { @class = "form-control", @placeholder = "DBA Name", @id = "vendorDBAname", @required = "required" })
+                                            @Html.ValidationMessageFor(x => x.VendorDBAName, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Legal Name</label><span class="glyphicon glyphicon-info-sign" style="float:right;margin-right:180px" title="Enter Legal Name if its different than DBA name."></span>
+                                            @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control", @placeholder = "VendorName", @required = "required", @id = "vendorname" })
+                                            @Html.ValidationMessageFor(x => x.VendorName, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row marbot10">
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <input type="radio" id="rdEIN" name="ssn" value="EIN" onclick="ModifyPlaceHolder1()"
+                                                   checked> EIN
+                                            <input type="radio" id="rdSSN" name="ssn" value="SSN" onclick="ModifyPlaceHolder2()"> SSN
+
+                                            @Html.TextBoxFor(m => m.VendorEIN, new { @class = "form-control", @placeholder = "xx-xxxxxxx", @id = "VendorEIN", @required = "required" })
+                                            @Html.ValidationMessageFor(x => x.VendorEIN, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Phone Number</label>
+                                            @Html.TextBoxFor(m => m.VendorPhone, new { @class = "form-control", @placeholder = "XXX-XXX-XXXX", @required = "required", @id = "phonenum", onkeypress = "return isNumber(event);" })
+                                            @Html.ValidationMessageFor(x => x.VendorPhone, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="row marbot10">
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>Person/CorpCode <span class="glyphicon glyphicon-info-sign" style="float:right;" title="C-Corp = C-Corp or S-Corp.&#13; N-Partnership/LLC = Non Corp (Partnership/LLC) &#13; G–Govt = Government or Non-Profit &#13; P–individual = Individual/Single member LLC/Sole Proprietor"></span>    </label>
+                                            @Html.DropDownListFor(m => m.PersonCorpCode, Model.PersonCorpCodes, "Select", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>FAX</label>
+                                            @Html.TextBoxFor(m => m.VendorFax, new { @class = "form-control", @placeholder = "XXX-XXX-XXXX", @id = "vfaxnum", onkeypress = "return isNumber(event);" })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row marbot10">
+
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>Address1</label>
+
+                                            @Html.TextBoxFor(m => m.VendorAddress, new { @class = "form-control", @placeholder = "Address", @required = "required" })
+                                        </div>
+
+                                    </div>
+
+
+
+
+
+                                </div>
+
+
+                                <div class="row marbot10">
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Address2</label>
+
+                                            @Html.TextBoxFor(m => m.VendorAddress2, new { @class = "form-control", @placeholder = "Address2" })
+                                            @Html.ValidationMessageFor(x => x.VendorAddress2, "", new { @class = "text-danger" })
+
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row marbot10">
+
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>City</label>
+
+                                            @Html.TextBoxFor(m => m.VendorCity, new { @class = "form-control", @placeholder = "City" })
+                                        </div>
+
+                                    </div>
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Key Contact</label>
+                                            @Html.TextBoxFor(m => m.PersonCompletingForm, new { @class = "form-control", @placeholder = "First Last", @id = "personCompName" })
+                                            @Html.ValidationMessageFor(x => x.PersonCompletingForm, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row marbot10">
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>State</label>
+
+                                            @Html.DropDownListFor(m => m.VendorState, Model.States, "Select State", new { @class = "form-control" })
+                                            @Html.ValidationMessageFor(x => x.VendorState, "", new { @class = "text-danger" })
+                                        </div>
+
+                                    </div>
+                                    <div class=" col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Designation(Title)</label>
+
+                                            @Html.TextBoxFor(m => m.PersonCompletingTitle, new { @class = "form-control", @placeholder = "Person Designation", @id = "personCompTitle", @required = "required" })
+                                            @Html.ValidationMessageFor(x => x.PersonCompletingTitle, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+                                <div class="row marbot10">
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>ZIP</label>
+                                            @Html.TextBoxFor(m => m.VendorZip, new { @class = "form-control", @placeholder = "ZipCode", @id = "vzipcode", @required = "required", onkeypress = "return isNumber(event);" })
+                                            @Html.ValidationMessageFor(x => x.VendorZip, "", new { @class = "text-danger" })
+
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>Payment Terms</label>
+                                            @Html.DropDownListFor(m => m.PaymentTerm, Model.PaymentTerms, new { @class = "form-control" })
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="row marbot10">
+
+                                    <div class="col-lg-6 col-md-4 col-xs-4">
+                                        <div class="form-group">
+
+                                            <label>Country</label>
+                                            <input type="text" class="form-control" value="US" />
+
+
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+                            <div class="col-lg-5">
+
+                                <div class="ibox" style="margin-bottom:10px !important;">
+                                    <div class="ibox-title">
+
+                                        <h5>
+
+                                            @Html.CheckBoxFor(m => m.ChkPaymentAddress, new { @id = "chkpaymentaddress" })  <label>Different payment address?</label>
+
+                                        </h5>
+
+                                    </div>
+                                    <div class="ibox-content">
+
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>Address</label>
+                                                    @Html.TextBoxFor(m => m.AIAddress, new { disabled = true, @class = "form-control", @id = "AIAddress", @placeholder = "Address" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>City</label>
+                                                    @Html.TextBoxFor(m => m.AICity, new { disabled = true, @class = "form-control", @id = "AICity", @placeholder = "City" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-8 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>State</label>
+                                                    @*@Html.TextBoxFor(m => m.AIState, new { disabled = true, @class = "form-control", @id = "AIState", @placeholder = "State" })*@
+
+                                                    @Html.DropDownListFor(m => m.AIState, Model.States, "Select State", new { @class = "form-control", disabled = true })
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>Zip</label>
+                                                    @Html.TextBoxFor(m => m.AIZip, new { disabled = true, @class = "form-control", @id = "AIZip", @placeholder = "Zip" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <div class="row marbot10">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="ibox" style="margin-bottom:10px !important;">
+                                    <div class="ibox-title">
+                                        <h5>@Html.CheckBoxFor(m => m.AcceptCard, new { @id = "chkcard" })  <label>Do you accept payments via purchasing card</label></h5>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="row ">
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>AR Name</label>
+                                                    @Html.TextBoxFor(m => m.CardHolderName, new { disabled = true, @class = "form-control", @id = "crdholdername", @placeholder = "AR Name" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>AR Phone</label>
+                                                    @Html.TextBoxFor(m => m.CardHolderPhone, new { disabled = true, @class = "form-control", @id = "crdholderphone", @placeholder = "XXX-XXX-XXXX" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>AR Email</label>
+                                                    @Html.TextBoxFor(m => m.CardHolderEmail, new { disabled = true, @class = "form-control", @id = "crdholderemail", @placeholder = "AR Email", @type = "email" })
+                                                    @Html.ValidationMessageFor(x => x.CardHolderEmail, "", new { @class = "text-danger" })
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="row marbot10">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+                                <div class="ibox" style="margin-bottom:10px !important;">
+                                    <div class="ibox-title">
+                                        <h5> <label>Authorized Individual Details </label> </h5><span class="glyphicon glyphicon-info-sign" style="float:left; padding-left:10px;" title="This is your AR Manager."></span>
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="row ">
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>Authorized Individual Name</label>
+                                                    @Html.TextBoxFor(m => m.AIName, new { @class = "form-control", @id = "AIName", @placeholder = "Authorized Name" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>Authorized Individual Phone</label>
+                                                    @Html.TextBoxFor(m => m.AIPhone, new { @class = "form-control", @id = "AIPhone", @placeholder = "XXX-XXX-XXXX" })
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-4 col-xs-4">
+                                                <div class="form-group">
+                                                    <label>Authorized Individual Email</label>
+                                                    @Html.TextBoxFor(m => m.AIEmail, new { @class = "form-control", @id = "AIEmail", @placeholder = "Authorized Email", @type = "email" })
+                                                    @Html.ValidationMessageFor(x => x.AIEmail, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="row marbot10">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+
+                                <div class="ibox" style="margin-bottom:10px !important;">
+                                    <div class="ibox-title">
+                                        <label>Upload Signed W9  </label>
+                                    </div>
+
+                                        <div class="ibox-content">
+                                            <div class="row  " style=" padding-bottom: 10px;">
+                                                <div class="col-lg-2 form-group">
+                                                    <label><span>Upload Document</span>  <span style="color:red">*</span> : </label>
+                                                </div>
+
+                                            @if (Model.VendorAddress != null)
+                                            {
+                                                    <input type="file" class="form-control" id="file" name="upload" oninvalid="this.setCustomValidity('Error: Please upload w9 document.')" onchange="this.setCustomValidity('')">
+                                            }
+                                            else
+                                            {
+                                                    <input type="file" class="form-control" id="file" name="upload" required oninvalid="this.setCustomValidity('Error: Please upload w9 document.')" onchange="this.setCustomValidity('')">
+                                            }
+
+                                            </div>
+
+                                            @*<hr style="border: none; border-bottom: 1px solid black;">*@
+                                            <input id="Button1" type="button" class="btn-primary" value="Additional Documents" onclick="AddFileUpload()" />
+
+                                            <div id="FileUploadContainer" style="margin-top:10px;">
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                        </div>
+
+                        <div class="row marbot10">
+                            <div class="col-lg-12 col-md-12 col-xs-12">
+
+
+                                <div class="ibox" style="margin-bottom:10px !important;">
+                                    <div class="ibox-title">
+                                        <h5 style="padding-right:15px;"> <label>Certified Diverse Firm ?</label> </h5>      <input type="radio" id="rdCDF" name="rdCDF" value="@Model.IsCertifiedDiverseFirm" onclick="IsCertifiedDiversified()" required> Yes
+                                        <input type="radio" id="rdCDF" name="rdCDF" value="@Model.IsCertifiedDiverseFirm" onclick="IsCertifiedDiversified()" checked  > No
+                                    </div>
+                                    <div class="ibox-content">
+                                        <div class="row  " >
+                                           
+                                            <div id="dvcertifiedform" style="visibility:hidden">
+                                                <div class="col-lg-2 form-group required">
+                                                    <label><span>Upload document</span>  <span style="color:red">*</span> : </label>
+                                                </div>
+                                                <input type="file" class="form-control" id="filecdfc" name="upload1" oninvalid="this.setCustomValidity('Error: Please upload document.')" onchange="this.setCustomValidity('')" >
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                        <div class="row " style="margin-top:10px;">
+                            <div class="form-group">
+                                <div class="col-lg-4 col-md-4">
+                                    <input type="submit" value="Submit" class="btn btn-primary" />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+
+
+            </div>
         }
 
-        .ryanHeader {
-            font-size: 30px;
-            color: white;
-        }
 
-        .marbot10 {
-            margin-bottom: 10px !important;
-        }
 
-        .marbot20 {
-            margin-bottom: 20px !important;
-        }
 
-        .hm-property {
-            margin-top: 10px;
-        }
+    </div>
 
-        .hm-fieldset {
-            margin-top: 12px;
-            width: 905px;
-            height: 250px;
-            border: 2px groove grey !important;
-            padding: 0 10px 10px 10px !important;
-        }
 
-        .hm-legend {
-            font-weight: bold;
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 18px;
-            color: #555;
-            border-bottom: none;
-            padding: 0 10px;
-            width: auto;
-        }
-    </style>
 
-    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script type="text/javascript">
 
-        $(function () {
-            $("#chkcard").click(function () {
-                if ($(this).is(':checked')) {
-                    $("#vendorcarddetails").show();
-                }
-                else {
-                    $("#vendorcarddetails").hide();
-                }
-            });
-        });
+
+
+        var counter = 0;
+
+        function AddFileUpload() {
+
+            var div = document.createElement('DIV');
+            div.classList.add("addFile");
+            div.innerHTML = '<input id="file' + counter + '" name = "upload' +
+                '" type="file" class="col-lg-6"  />' +
+                '<input id="Button' + counter + '" type="button" ' +
+                'value="Remove" onclick = "RemoveFileUpload(this)" />';
+
+
+            document.getElementById("FileUploadContainer").appendChild(div);
+
+            counter++;
+
+        }
+
+        function RemoveFileUpload(div) {
+
+            document.getElementById("FileUploadContainer").removeChild(div.parentNode);
+
+        }
+
+        function IsCertifiedDiversified() {
+            var input = document.getElementById("rdCDF");
+            if (input.checked) {
+             
+                $("#filecdfc").prop('required', true);
+                $("#dvcertifiedform").css('visibility', 'visible');
+                $("#dvcertifiedform").show();
+               
+            }
+            else {
+                $("#filecdfc").prop('required', false);
+                $("#filecdfc").val('');
+               $("#dvcertifiedform").css('visibility', 'hidden');
+                $("#dvcertifiedform").hide();
+               
+
+
+            }
+        }
+
+
+        function ModifyPlaceHolder1() {
+            var input = document.getElementById("VendorEIN");
+            $("#VendorEIN").val("");
+            input.placeholder = "XX-XXXXXX";
+        }
+
+        function ModifyPlaceHolder2() {
+            var input = document.getElementById("VendorEIN");
+            $("#VendorEIN").val("");
+            input.placeholder = "XXX-XXX-XXXX";
+        }
+
 
 
         function isNumber(evt) {
@@ -77,218 +546,212 @@
             }
             return true;
         }
+
+        $(function () {
+
+             var xraw = @Html.Raw(JsonModel);
+
+
+             if (xraw.ChkPaymentAddress) {
+
+                 $("#AIAddress").prop("disabled", false);
+                 $("#AIAddress2").prop("disabled", false);
+                 $("#AICity").prop("disabled", false);
+                 $("#AIState").prop("disabled", false);
+                 $("#AIZip").prop("disabled", false);
+
+             }
+
+             if (xraw.AcceptCard) {
+
+                 $("#crdholdername").prop("disabled", false);
+                 $("#crdholderphone").prop("disabled", false);
+                 $("#crdholderemail").prop("disabled", false);
+
+             }
+
+             $("#CertifiedDiverseFirm").click(function () {
+                 if ($(this).is(':checked')) {
+                  
+                     $("#dvcertifiedform").show();
+                 }
+                 else {
+                     $("#dvcertifiedform").hide();
+
+                
+                 }
+             });
+
+
+
+            $("#chkpaymentaddress").click(function () {
+                if ($(this).is(':checked')) {
+                    // $("#dvcertifiedform").show();
+                    $("#AIAddress").prop("disabled", false);
+                    $("#AIAddress2").prop("disabled", false);
+                    $("#AICity").prop("disabled", false);
+                    $("#AIState").prop("disabled", false);
+                    $("#AIZip").prop("disabled", false);
+
+                }
+                else {
+                    //$("#vendorcarddetails").hide();
+
+                    $("#AIAddress").prop("disabled", true);
+                    $("#AIAddress2").prop("disabled", true);
+                    $("#AICity").prop("disabled", true);
+                    $("#AIState").prop("disabled", true);
+                    $("#AIZip").prop("disabled", true);
+                }
+            });
+
+
+
+            $("#chkcard").click(function () {
+                if ($(this).is(':checked')) {
+                    // $("#vendorcarddetails").show();
+                    $("#crdholdername").prop("disabled", false);
+                    $("#crdholderphone").prop("disabled", false);
+                    $("#crdholderemail").prop("disabled", false);
+
+                }
+                else {
+                    //$("#vendorcarddetails").hide();
+
+                    $("#crdholdername").prop("disabled", true);
+                    $("#crdholderphone").prop("disabled", true);
+                    $("#crdholderemail").prop("disabled", true);
+                }
+            });
+        });
+
+
+
+
+        $(document).ready(function () {
+
+            $("#vendorform").submit(function (e) {
+
+                //stop submitting the form to see the disabled button effect
+                //  e.preventDefault();
+
+                //disable the submit button
+                $("#btnSubmit").attr("disabled", true);
+
+                return true;
+
+            });
+
+
+
+            $("#vzipcode, #AIZip").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+                var curchr = this.value.length;
+                var curval = $(this).val();
+                if (curchr == 5) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 9) {
+
+                    $(this).attr('maxlength', '10');
+                }
+            });
+
+            /***phone number format***/
+            $("#phonenum, #crdholderphone,#AIPhone , #vfaxnum").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+
+                var curchr = this.value.length;
+                var curval = $(this).val();
+                if (curchr == 3) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 7) {
+                    $(this).val(curval + "-");
+                } else if (curchr == 9) {
+
+                    $(this).attr('maxlength', '12');
+                }
+
+                //var curchr = this.value.length;
+                //var curval = $(this).val();
+                //if (curchr == 3 && curval.indexOf("(") <= -1) {
+                //    $(this).val("(" + curval + ")" + "-");
+                //} else if (curchr == 4 && curval.indexOf("(") > -1) {
+                //    $(this).val(curval + ")-");
+                //} else if (curchr == 5 && curval.indexOf(")") > -1) {
+                //    $(this).val(curval + "-");
+                //} else if (curchr == 9) {
+                //    $(this).val(curval + "-");
+                //    $(this).attr('maxlength', '14');
+                //}
+            });
+
+
+            $("#VendorEIN").keypress(function (e) {
+                if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)) {
+                    return false;
+                }
+
+                if ($("#rdSSN").is(':checked')) {
+                    var curchr = this.value.length;
+                    var curval = $(this).val();
+                    if (curchr == 3 && curval.indexOf("(") <= -1) {
+                        $(this).val(curval + "-");
+
+                    } else if (curchr == 6) {
+                        $(this).val(curval + "-");
+                    } else if (curchr == 9) {
+                        $(this).attr('maxlength', '11');
+                    }
+                }
+                else {
+                    var curchr = this.value.length;
+                    var curval = $(this).val();
+                    if (curchr == 2 ) {
+                        $(this).val(curval + "-");
+                    } else if (curchr == 9) {
+                        $(this).attr('maxlength', '10');
+                    }
+                }
+
+            });
+
+
+
+            $("#vendorname,#vendorDBAname,#contactfirstname , #contactlastname,#crdholdername , #personCompTitle , #personCompName ").keyup(function () {
+                var yourInput = $(this).val();
+                re = /[`~!#$%^*()_|=?;:@@"<>\{\}\[\]\\\/]/gi;
+                //  re = "^[0 - 9a- zA - Z''- '\s]{1,40}$";
+                var isSplChar = re.test(yourInput);
+                if (isSplChar) {
+                    var no_spl_char = yourInput.replace(/[`~!#$%^*()_|\=?;:@@'"<>\{\}\[\]\\\/]/gi, '');
+                    $(this).val(no_spl_char);
+                }
+            });
+
+
+
+            $('#crdholderemail').focusout(function () {
+
+                $('#crdholderemail').filter(function () {
+                    var emil = $('#crdholderemail').val();
+                    var emailReg = /^([\w-\.]+@@([\w-]+\.)+[\w-]{2,4})?$/;
+                    if (!emailReg.test(emil)) {
+                        $('#crdholderemail').addClass("mandfield");
+                    } else {
+                        $('#crdholderemail').removeClass("mandfield");
+                    }
+                })
+            });
+        });
+
+
+
     </script>
 
-</head>
-
-<body>
-    @using Ryan.VendorOnboarding.WebUI.Models
-    @model VendorViewModel
-
-
-
-    <div class="container body-content">
-
-        <header class="header">
-            <span class="ryanHeader">  Ryan Vendor Form </span>
-
-        </header>
-
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post,new { enctype = "multipart/form-data"  }))
-        {
-        @Html.AntiForgeryToken()
-
-
-        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-
-        <div class="container">
-            <div class="row marbot10">
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-
-                    <div class="form-group">
-                        <label> Select Circle</label>
-
-                        @Html.DropDownListFor(m => m.CircleOne, Model.States, "select one", new { @class = "form-control" })
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row marbot10">
-
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Vendor Name</label>
-                        @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control", @placeholder = "VendorName" })
-                    </div>
-
-
-
-                </div>
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Vendor DBA Name</label>
-
-                        @Html.TextBoxFor(m => m.VendorDBAName, new { @class = "form-control", @placeholder = "DBA Name" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row marbot10">
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <label>EIN</label>
-
-                    @Html.TextBoxFor(m => m.VendorEIN, new { @class = "form-control", @placeholder = "EIN", onkeypress = "return isNumber(event);" })
-
-                </div>
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <label>EIN</label>
-
-                    @Html.TextBoxFor(m => m.VendorAddress, new { @class = "form-control", @placeholder = "Address" })
-                </div>
-            </div>
-            <div class="row marbot10">
-                <div class="col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Address</label>
-
-                        @Html.TextBoxFor(m => m.AddressState, new { @class = "form-control", @placeholder = "State" })
-                    </div>
-
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-4">
-
-                    <label>ZIP</label>
-                    @Html.TextBoxFor(m => m.VendorZip, new { @class = "form-control", @placeholder = "ZipCode", onkeypress = "return isNumber(event);" })
-
-                </div>
-            </div>
-            <div class="row marbot10">
-                <div class="col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Phone Number</label>
-                        @Html.TextBoxFor(m => m.VendorPhone, new { @class = "form-control", @placeholder = "PhoneNumber" })
-                    </div>
-
-                </div>
-                <div class="col-lg-4 col-md-4 col-xs-4">
-                    <label>FAX</label>
-                    @Html.TextBoxFor(m => m.VendorFax, new { @class = "form-control", @placeholder = "FAX" })
-                </div>
-            </div>
-
-
-
-
-            <div class="row marbot10">
-                <div class="col-lg-4 col-md-4 col-xs-4">
-
-                    @Html.CheckBoxFor(m => m.AcceptCard, new { @id = "chkcard" })  <label>Do you accept card</label>
-
-                </div>
-
-            </div>
-            <div id="vendorcarddetails" style="display: none;">
-                <div class="row marbot10">
-
-                    <div class="col-lg-4 col-md-4 col-xs-4">
-                        <div class="form-group">
-                            <label>Card Holder Name</label>
-                            @Html.TextBoxFor(m => m.CardHolderName, new { @class = "form-control", @placeholder = "CardHolder Name" })
-                        </div>
-                    </div>
-
-
-
-                </div>
-
-                <div class="row marbot10">
-
-                    <div class="col-lg-4 col-md-4 col-xs-4">
-                        <div class="form-group">
-                            <label>Card Holder Phone</label>
-                            @Html.TextBoxFor(m => m.CardHolderPhone, new { @class = "form-control", @placeholder = "CardHolder Phone" })
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4 col-md-4 col-xs-4">
-                        <div class="form-group">
-                            <label>Card Holder Email</label>
-                            @Html.TextBoxFor(m => m.CardHolderEmail, new { @class = "form-control", @placeholder = "CardHolder Email" })
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-
-            </div>
-
-
-            <div class="row marbot10">
-
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Person Completing this Form</label>
-                        @Html.TextBoxFor(m => m.PersonCompletingForm, new { @class = "form-control", @placeholder = "PersonCompleting Form" })
-                    </div>
-
-
-
-                </div>
-                <div class=" col-lg-4 col-md-4 col-xs-4">
-                    <div class="form-group">
-                        <label>Designation(Title)</label>
-
-                        @Html.TextBoxFor(m => m.PersonCompletingTitle, new { @class = "form-control", @placeholder = "Person Designation" })
-                    </div>
-                </div>
-            </div>
-
-            <div class="row marbot10">
-                <div class="form-group">
-                    @Html.Label("Upload Document", new { @class = "control-label col-md-2" })
-                    <div class="col-lg-9 col-md-9">
-                        <input type="file" id="Avatar" name="upload" />
-                    </div>
-                </div>
-
-            </div>
-
-
-            <div class="row marbot10">
-                <div class="col-lg-4 col-md-4 col-xs-4">
-
-                    @Html.CheckBoxFor(m => m.AcceptAboveDetails , new { @id = "acknowledge" })  <label>I acknowledge that details submited are true to my knowledge</label>
-
-                </div>
-
-            </div>
-
-
-            <div class="row">
-                <div class="form-group">
-                    <div class="col-lg-4 col-md-4">
-                        <input type="submit" value="Submit" class="btn btn-primary" />
-                    </div>
-                </div>
-            </div>
-
-
-        </div>
-
-
-}
-
-
-
-
-    </div>
-
-
-       
 
 </body>
 </html>
